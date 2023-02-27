@@ -51,9 +51,10 @@ const Register = () => {
       style={{
         margin: "auto",
         padding: "15px",
-        maxWidth: "450px",
+        maxWidth: "470px",
         alignContent: "center",
         marginTop: "120px",
+        boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px",
       }}
     >
       <MDBCard alignment="center">
