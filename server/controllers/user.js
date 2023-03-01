@@ -56,3 +56,31 @@ export const signup = async (req, res) => {
       .json({ message: `Something Went Wrong !! -> error message : ${err}` });
   }
 };
+
+export const googleSignIn = async (req, res) => {
+  const { email, name, googleId } = req.body;
+  try {
+    const oldUser = await UserModal.findOne({ email });
+    if (oldUser) {
+      const result = { _id: oldUser._id.toString(), email, name };
+      const token = jwt.sign({ email: result.email, id: result._id }, secret, {
+        expiresIn: "1h",
+      });
+      return res.status(200).json({ result, token });
+    }
+
+    const result = await UserModal.create({
+      email,
+      name,
+      googleId,
+    });
+    const token = jwt.sign({ email: result.email, id: result._id }, secret, {
+      expiresIn: "1h",
+    });
+    res.status(200).json({ result, token });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: `Something Went Wrong !! -> error message : ${err}` });
+  }
+};

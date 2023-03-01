@@ -58,18 +58,6 @@ const Register = () => {
       }}
     >
       <MDBCard alignment="center">
-        {/* <MDBIcon
-          style={{ marginTop: "20px" }}
-          fas
-          icon="user-circle"
-          className="fa-2x"
-        />
-        <MDBIcon
-          style={{ marginTop: "20px", marginBottom: "10px" }}
-          fas
-          icon="user-alt"
-          className="fa-2x"
-        /> */}
         <MDBIcon
           style={{ marginTop: "20px", marginBottom: "10px" }}
           far
