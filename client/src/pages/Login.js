@@ -135,39 +135,6 @@ const Login = () => {
             </div>
           </MDBValidation>
           <br />
-          {/* <div className="col-12">
-            <GoogleLogin
-              clientId="760248716623-faanng7qrcetcq6q7hkc0ovagcnp9sms.apps.googleusercontent.com"
-              render={(renderProps) => (
-                <MDBBtn
-                  style={{ width: "100%" }}
-                  color="danger"
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                >
-                  <MDBIcon className="me-2" fab icon="google" /> Google Sign In
-                </MDBBtn>
-              )}
-              onSuccess={googleSuccess}
-              onFailure={googleFailure}
-              cookiePolicy="single_host_origin"
-            /> */}
-          {/* <GoogleLogin
-              clientId="246153192640-7b6sg2bds58it6t083i9lgguepk4sahg.apps.googleusercontent.com"
-              render={(renderProps) => (
-                <MDBBtn
-                  style={{ width: "100%" }}
-                  color="danger"
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                >
-                  <MDBIcon className="me-2" fab icon="google" /> Google Sign In
-                </MDBBtn>
-              )}
-              onSuccess={googleSuccess}
-              onFailure={googleFailure}
-              cookiePolicy="single_host_origin"
-            /> */}
           <div>
             <GoogleLogin
               clientId="545122360841-60668tc347e01cmild398geg689a8jun.apps.googleusercontent.com"
