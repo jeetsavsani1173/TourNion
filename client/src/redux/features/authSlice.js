@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
-import { action } from "@remix-run/router";
+// import { action } from "@remix-run/router";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -51,6 +51,15 @@ const authSlice = createSlice({
     error: "",
     loading: false,
   },
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+    setLogout: (state, action) => {
+      state.user = null;
+      localStorage.removeItem("profile");
+    },
+  },
   extraReducers: {
     [login.pending]: (state, action) => {
       state.loading = true;
@@ -90,5 +99,7 @@ const authSlice = createSlice({
     },
   },
 });
+
+export const { setUser, setLogout } = authSlice.actions;
 
 export default authSlice.reducer;
