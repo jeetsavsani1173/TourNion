@@ -93,20 +93,6 @@ const AddEditTour = () => {
                 // validation="Please provide your email."
               />
             </MDBValidationItem>
-            {/* <div className="col-md-12">
-              <textarea
-                placeholder="Enter Description"
-                type="text"
-                style={{ height: "100px" }}
-                value={description}
-                name="description"
-                onChange={onInputChange}
-                className="form-control"
-                required
-                invalid
-                validation="please Provide description"
-              />
-            </div> */}
             <div className="col-md-12">
               <ChipInput
                 name="tags"
