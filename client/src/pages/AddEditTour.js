@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MDBCard,
   MDBCardBody,
@@ -12,6 +12,8 @@ import ChipInput from "material-ui-chip-input";
 import FileBase from "react-file-base64";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createTour } from "../redux/features/tourSlice";
 
 const initialState = {
   title: "",
@@ -21,10 +23,27 @@ const initialState = {
 
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
+  const { error, loading } = useSelector((state) => ({ ...state.tour }));
+  const { user } = useSelector((state) => ({ ...state.auth }));
   const { title, description, tags } = tourData;
 
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleClear = () => {
+    setTourData({ title: "", description: "", tags: [] });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (title && description && tags) {
+      const updatedTourData = { ...tourData, name: user?.result?.name };
+      dispatch(createTour({ updatedTourData, navigator, toast }));
+      handleClear();
+      navigate("/");
+    }
   };
   const onInputChange = (e) => {
     const { name, value } = e.target;
@@ -38,9 +57,6 @@ const AddEditTour = () => {
       ...tourData,
       tags: tourData.tags.filter((tag) => tag !== deleteTag),
     });
-  };
-  const handleClear = () => {
-    setTourData({ title: "", description: "", tags: [] });
   };
   return (
     <div

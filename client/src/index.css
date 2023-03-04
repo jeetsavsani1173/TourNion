@@ -17,3 +17,18 @@ code {
   margin-top: 20px;
   font-size: 17px;
 }
+
+/* CardTour section */
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.tag-card {
+  margin: 10px 0 0 20px;
+  color: #806a78;
+}
