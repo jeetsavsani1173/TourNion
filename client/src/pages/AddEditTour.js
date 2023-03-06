@@ -23,6 +23,7 @@ const initialState = {
 
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const { error, loading } = useSelector((state) => ({ ...state.tour }));
   const { user } = useSelector((state) => ({ ...state.auth }));
   const { title, description, tags } = tourData;
@@ -33,8 +34,10 @@ const AddEditTour = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleClear = () => {
     setTourData({ title: "", description: "", tags: [] });
+    setPreviewUrl(null);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,7 +91,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
-                // validation="Please provide your email."
+              // validation="Please provide your email."
               />
             </MDBValidationItem>
             <MDBValidationItem
@@ -106,7 +109,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
-                // validation="Please provide your email."
+              // validation="Please provide your email."
               />
             </MDBValidationItem>
             <div className="col-md-12">
@@ -124,10 +127,16 @@ const AddEditTour = () => {
               <FileBase
                 type="file"
                 multiple={false}
-                onDone={({ base64 }) =>
-                  setTourData({ ...tourData, imageFile: base64 })
+                onDone={({ base64 }) => {
+                  setTourData({ ...tourData, imageFile: base64 }
+                  )
+                  setPreviewUrl(base64)
+                }
                 }
               />
+            </div>
+            <div className="col-12">
+              {previewUrl && <img src={previewUrl} className='col-12' alt="Preview" />}
             </div>
             <div className="col-12">
               <MDBBtn style={{ width: "100%" }}>Submit</MDBBtn>
