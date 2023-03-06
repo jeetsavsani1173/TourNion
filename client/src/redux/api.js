@@ -11,10 +11,13 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
+// user authentication api calls.
 export const signIn = (formData) => API.post("/users/signin", formData);
 export const signUp = (formData) => API.post("/users/signup", formData);
 export const googleSignIn = (result) => API.post("/users/googleSignIn", result);
 
+// tour api calls.
 export const createTour = (tourData) => API.post("/tour", tourData);
 export const getTours = () => API.get("/tour");
 export const getTour = (id) => API.get(`/tour/${id}`);
+export const getToursByUser = (userId) => API.get(`/tour/userTours/${userId}`);
