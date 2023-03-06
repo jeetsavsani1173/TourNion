@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import { getTour } from "../redux/features/tourSlice";
+import { toast } from "react-toastify";
 
 const SingleTour = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const SingleTour = () => {
   return (
     <>
       <MDBContainer>
-        <MDBCard className="mb-3 mt-2">
+        <MDBCard className="mb-3" style={{ marginTop: '90px' }}>
           <MDBCardImage
             position="top"
             style={{ width: "100%", maxHeight: "600px" }}
@@ -38,12 +39,12 @@ const SingleTour = () => {
               <p className="text-start tourName">Created By: {tour.name}</p>
             </span>
             <div style={{ float: "left" }}>
-              <span className="text-start">
-                {tour && tour.tags && tour.tags.map((item) => `#${item} `)}
-              </span>
+              {/* <span className="text-start" > */}
+              {tour && tour.tags && tour.tags.map((item) => <span key={item} className='badge mt-2 mx-1' style={{ backgroundColor: '#e1ebf7', color: '#1a91eb', fontSize: '15px' }}>{item}</span>)}
+              {/* </span> */}
             </div>
             <br />
-            <MDBCardText className="text-start mt-2">
+            <MDBCardText className="text-start mt-3">
               {/* <MDBIcon
                 style={{ float: "left", margin: "5px" }}
                 far
