@@ -35,3 +35,12 @@ export const getTour = async (req, res) => {
     res.status(404).json({ message: "Something went wrong." });
   }
 };
+
+export const getToursByUser = async (req, res) => {
+  const {id} = req.params;
+  if(!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({message: "User doesn't exist."});
+
+  const userTours = await TourModel.find({creator: id});
+  res.status(200).json(userTours);
+}
