@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import TourModel from "../models/tour.js";
 
 export const createTour = async (req, res) => {
