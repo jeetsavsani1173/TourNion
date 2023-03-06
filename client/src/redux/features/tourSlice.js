@@ -6,7 +6,7 @@ export const createTour = createAsyncThunk(
   async ({ updatedTourData, navigate, toast }, { rejectWithValue }) => {
     try {
       const response = await api.createTour(updatedTourData);
-      toast.success("Tour Added Succesfully");
+      toast.success("Tour Added Successfully");
       navigate("/");
       return response.data;
     } catch (err) {
@@ -17,6 +17,7 @@ export const createTour = createAsyncThunk(
 
 export const getTours = createAsyncThunk(
   "tour/getTours",
+  // meaning of _ is the dispatch function, we are not providing any data from the client side
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.getTours();
