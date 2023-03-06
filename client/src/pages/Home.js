@@ -23,7 +23,7 @@ const Home = () => {
         alignContent: "center",
       }}
     >
-      <MDBRow className="mt-5">
+      <MDBRow className="my-5">
         {tours.length === 0 && (
           <MDBTypography className="text-center mb-0" tag="h2">
             No Tours Found!
@@ -31,7 +31,7 @@ const Home = () => {
         )}
         <MDBCol>
           <MDBContainer>
-            <MDBRow className="row-cols-1 row-cols-md-3 g-2">
+            <MDBRow className="row-cols-1 row-cols-md-3 g-2 my-5">
               {tours &&
                 tours.map((item, index) => <CardTour key={index} {...item} />)}
             </MDBRow>
