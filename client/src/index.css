@@ -32,3 +32,11 @@ code {
   margin: 10px 0 0 20px;
   color: #806a78;
 }
+
+/* single Tour section */
+.tourName {
+  color: "#F48FB1";
+  font-size: 18px;
+  margin: 0 0 0 4px;
+  font-weight: 500;
+}
