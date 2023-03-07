@@ -23,6 +23,7 @@ const initialState = {
 
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
+  const [tagErrMsg, setTagErrMsg] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const { error, loading, userTours } = useSelector((state) => ({
     ...state.tour,
@@ -51,15 +52,19 @@ const AddEditTour = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!tags.length) {
+      setTagErrMsg("Please provide some tags");
+    }
     if (title && description && tags) {
       const updatedTourData = { ...tourData, name: user?.result?.name };
 
       if (!id) {
-        // it is render from add tour page
+        // it is render for add tour page
         dispatch(createTour({ updatedTourData, navigator, toast }));
         handleClear();
         navigate("/");
       } else {
+        // it is render for edit tour page
         dispatch(updateTour({ id, updatedTourData, navigate, toast }));
       }
       // navigate("/");
@@ -70,6 +75,7 @@ const AddEditTour = () => {
     setTourData({ ...tourData, [name]: value });
   };
   const handleAddTag = (tag) => {
+    setTagErrMsg(null);
     setTourData({ ...tourData, tags: [...tourData.tags, tag] });
   };
   const handleDeleteTag = (deleteTag) => {
@@ -119,13 +125,14 @@ const AddEditTour = () => {
               <MDBTextArea
                 label="Enter Description"
                 type="text"
-                style={{ height: "100px" }}
+                // style={{ height: "100px" }}
                 value={description}
                 name="description"
                 onChange={onInputChange}
                 className="form-control"
                 required
                 invalid
+                rows={4}
                 // validation="Please provide your email."
               />
             </MDBValidationItem>
@@ -139,6 +146,7 @@ const AddEditTour = () => {
                 onAdd={(tag) => handleAddTag(tag)}
                 onDelete={(tag) => handleDeleteTag(tag)}
               />
+              {tagErrMsg && <div className="tagErrMsg">{tagErrMsg}</div>}
             </div>
             <div className="d-flex justify-content-start">
               <FileBase

@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import { getTour } from "../redux/features/tourSlice";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 const SingleTour = () => {
   const dispatch = useDispatch();

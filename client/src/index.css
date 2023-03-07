@@ -40,3 +40,11 @@ code {
   margin: 0 0 0 4px;
   font-weight: 500;
 }
+
+/* AddEditTour section */
+.tagErrMsg {
+  color: #f93154;
+  margin-top: 5px;
+  text-align: left;
+  font-size: 14px;
+}

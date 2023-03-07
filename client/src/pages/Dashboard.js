@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  MDBContainer,
   MDBRow,
   MDBCol,
   MDBCard,
@@ -68,14 +67,13 @@ const Dashboard = () => {
       {userTours &&
         userTours.map((item) => {
           return (
-            <MDBCardGroup>
+            <MDBCardGroup key={item._id}>
               <MDBCard
                 style={{
                   maxWidth: "600px",
                   boxShadow:
                     "rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px",
                 }}
-                key={item._id}
                 className="mt-3 mb-3"
               >
                 <MDBRow className="g-0">
