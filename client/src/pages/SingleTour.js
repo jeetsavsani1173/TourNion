@@ -26,10 +26,20 @@ const SingleTour = () => {
   return (
     <>
       <MDBContainer>
-        <MDBCard className="mb-3" style={{ marginTop: '90px' }}>
+        <MDBCard
+          className="mb-3"
+          style={{
+            marginTop: "90px",
+            boxShadow:
+              "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px",
+          }}
+        >
           <MDBCardImage
             position="top"
-            style={{ width: "100%", maxHeight: "600px" }}
+            style={{
+              width: "100%",
+              maxHeight: "600px",
+            }}
             src={tour.imageFile}
             alt={tour.title}
           />
@@ -40,7 +50,21 @@ const SingleTour = () => {
             </span>
             <div style={{ float: "left" }}>
               {/* <span className="text-start" > */}
-              {tour && tour.tags && tour.tags.map((item) => <span key={item} className='badge mt-2 mx-1' style={{ backgroundColor: '#e1ebf7', color: '#1a91eb', fontSize: '15px' }}>{item}</span>)}
+              {tour &&
+                tour.tags &&
+                tour.tags.map((item) => (
+                  <span
+                    key={item}
+                    className="badge mt-2 mx-1"
+                    style={{
+                      backgroundColor: "#e1ebf7",
+                      color: "#1a91eb",
+                      fontSize: "15px",
+                    }}
+                  >
+                    {item}
+                  </span>
+                ))}
               {/* </span> */}
             </div>
             <br />

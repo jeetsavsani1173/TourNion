@@ -21,13 +21,22 @@ const CardTour = ({ imageFile, description, title, tags, _id, name }) => {
     return str;
   };
   return (
-    <MDBCardGroup className="mb-4">
+    <MDBCardGroup
+      className="mb-4"
+      style={{
+        boxShadow:
+          "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px",
+      }}
+    >
       <MDBCard className="h-100 mt-2 d-sm-flex" style={{ maxWidth: "20rem" }}>
         <MDBCardImage
           src={imageFile}
           alt={title}
           position="top"
-          style={{ maxWidth: "100%", height: "180px" }}
+          style={{
+            maxWidth: "100%",
+            height: "180px",
+          }}
         />
         <div className="top-left">{name}</div>
         <span className="text-start tag-card">
