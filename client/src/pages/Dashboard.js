@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MDBContainer,
   MDBRow,
@@ -17,12 +17,19 @@ import { Link } from "react-router-dom";
 import { deleteTour, getToursByUser } from "../redux/features/tourSlice";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 const Dashboard = () => {
   const { user } = useSelector((state) => ({ ...state.auth }));
   const { userTours, loading } = useSelector((state) => ({ ...state.tour }));
   const userId = user?.result?._id;
   const dispatch = useDispatch();
+
+  // for dispalying popup of delete operation
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     if (userId) dispatch(getToursByUser(userId));
@@ -37,9 +44,8 @@ const Dashboard = () => {
 
   const handleDelete = (id) => {
     console.log(id);
-    if (window.confirm("Are you sure you want to delete this tour?")) {
-      dispatch(deleteTour({ id, toast }));
-    }
+    dispatch(deleteTour({ id, toast }));
+    handleClose();
   };
 
   // spinner
@@ -99,12 +105,34 @@ const Dashboard = () => {
                         }}
                       >
                         <MDBBtn className="mt-1" tag="a" color="none">
+                          <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                              <Modal.Title>
+                                Deleting The Tour :{item.title}
+                              </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              Are you sure you want to delete this tour ?
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={handleClose}>
+                                Close
+                              </Button>
+                              <Button
+                                variant="danger"
+                                onClick={() => handleDelete(item._id)}
+                              >
+                                Delete
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
                           <MDBIcon
                             fas
                             icon="trash"
                             style={{ color: "#dd4b39" }}
                             size="lg"
-                            onClick={() => handleDelete(item._id)}
+                            // onClick={() => handleDelete(item._id)}
+                            onClick={() => handleShow()}
                           />
                         </MDBBtn>
                         <Link to={`/editTour/${item._id}`}>
