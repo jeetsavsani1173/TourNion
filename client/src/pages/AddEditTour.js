@@ -11,9 +11,9 @@ import {
 import ChipInput from "material-ui-chip-input";
 import FileBase from "react-file-base64";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createTour } from "../redux/features/tourSlice";
+import { createTour, updateTour } from "../redux/features/tourSlice";
 
 const initialState = {
   title: "",
@@ -24,9 +24,19 @@ const initialState = {
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const { error, loading } = useSelector((state) => ({ ...state.tour }));
+  const { error, loading, userTours } = useSelector((state) => ({
+    ...state.tour,
+  }));
   const { user } = useSelector((state) => ({ ...state.auth }));
   const { title, description, tags } = tourData;
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      const singleTour = userTours.find((tour) => tour._id === id);
+      setTourData({ ...singleTour });
+    }
+  }, [id]);
 
   useEffect(() => {
     error && toast.error(error);
@@ -43,9 +53,15 @@ const AddEditTour = () => {
     e.preventDefault();
     if (title && description && tags) {
       const updatedTourData = { ...tourData, name: user?.result?.name };
-      dispatch(createTour({ updatedTourData, navigator, toast }));
-      handleClear();
-      navigate("/");
+
+      if (!id) {
+        // it is render from add tour page
+        dispatch(createTour({ updatedTourData, navigator, toast }));
+      } else {
+        dispatch(updateTour({ id, updatedTourData, navigate, toast }));
+      }
+      // handleClear();
+      // navigate("/");
     }
   };
   const onInputChange = (e) => {
@@ -74,7 +90,7 @@ const AddEditTour = () => {
       className="container"
     >
       <MDBCard alignment="center">
-        <h5>Add Tour</h5>
+        <h5>{id ? "Update Tour" : "Add Tour"}</h5>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} className="row g-3" noValidate>
             <MDBValidationItem
@@ -91,7 +107,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
-              // validation="Please provide your email."
+                // validation="Please provide your email."
               />
             </MDBValidationItem>
             <MDBValidationItem
@@ -109,7 +125,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
-              // validation="Please provide your email."
+                // validation="Please provide your email."
               />
             </MDBValidationItem>
             <div className="col-md-12">
@@ -128,18 +144,20 @@ const AddEditTour = () => {
                 type="file"
                 multiple={false}
                 onDone={({ base64 }) => {
-                  setTourData({ ...tourData, imageFile: base64 }
-                  )
-                  setPreviewUrl(base64)
-                }
-                }
+                  setTourData({ ...tourData, imageFile: base64 });
+                  setPreviewUrl(base64);
+                }}
               />
             </div>
             <div className="col-12">
-              {previewUrl && <img src={previewUrl} className='col-12' alt="Preview" />}
+              {previewUrl && (
+                <img src={previewUrl} className="col-12" alt="Preview" />
+              )}
             </div>
             <div className="col-12">
-              <MDBBtn style={{ width: "100%" }}>Submit</MDBBtn>
+              <MDBBtn style={{ width: "100%" }}>
+                {id ? "Update" : "Submit"}
+              </MDBBtn>
               <MDBBtn
                 style={{ width: "100%" }}
                 className="mt-2"
