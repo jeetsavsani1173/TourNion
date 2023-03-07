@@ -30,10 +30,31 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/addTour" element={<PrivateRoute> <AddEditTour /> </PrivateRoute>} />
-          <Route path="/editTour/:id" element={<PrivateRoute> <AddEditTour /> </PrivateRoute>} />
+          <Route
+            path="/addTour"
+            element={
+              <PrivateRoute>
+                <AddEditTour />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/editTour/:id"
+            element={
+              <PrivateRoute>
+                <AddEditTour />
+              </PrivateRoute>
+            }
+          />
           <Route path="/tour/:id" element={<SingleTour />} />
-          <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
