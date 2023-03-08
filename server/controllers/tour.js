@@ -90,9 +90,17 @@ export const getToursBySearch = async (req, res) => {
     const title = new RegExp(searchQuery, "i");
     const tours = await TourModel.find({ title });
     res.json(tours);
-    // res.status(200).json({ message: "Done biro.." });
   } catch (err) {
     res.status(404).json({ message: "Something went wrong." });
   }
-  // res.status(200).json({ message: "Done biro 2.." });
+};
+
+export const getToursByTags = async (req, res) => {
+  const { tag } = req.params;
+  try {
+    const tours = await TourModel.find({ tags: { $in: tag } });
+    res.json(tours);
+  } catch (err) {
+    res.status(404).json({ message: "Something went wrong." });
+  }
 };

@@ -8,6 +8,7 @@ import {
   getTour,
   getTours,
   getToursBySearch,
+  getToursByTags,
   getToursByUser,
   updateTour,
 } from "../controllers/tour.js";
@@ -15,6 +16,7 @@ import {
 router.post("/", auth, createTour);
 router.get("/", getTours);
 router.get("/search", getToursBySearch);
+router.get("/tag/:tag", getToursByTags);
 router.get("/userTours/:id", auth, getToursByUser);
 router.patch("/:id", auth, updateTour);
 router.delete("/:id", auth, deleteTour);
