@@ -14,6 +14,7 @@
     "google-login-react": "^0.2.17",
     "material-ui-chip-input": "^1.1.0",
     "mdb-react-ui-kit": "^5.1.0",
+    "mdbreact": "^5.2.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",

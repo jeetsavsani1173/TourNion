@@ -3,7 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
-import connectDB from './config/db.js';
+import connectDB from "./config/db.js";
 
 // routes
 import userRouter from "./routes/user.js";

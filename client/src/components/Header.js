@@ -3,6 +3,7 @@ import {
   MDBNavbar,
   MDBContainer,
   MDBIcon,
+  MDBBtn,
   MDBNavbarNav,
   MDBNavbarItem,
   MDBNavbarLink,
@@ -12,12 +13,31 @@ import {
 } from "mdb-react-ui-kit";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogout } from "../redux/features/authSlice";
+import Button from "react-bootstrap/Button";
+import { searchTours } from "../redux/features/tourSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [show, setShow] = useState(false);
+  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(setLogout());
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (search) {
+      dispatch(searchTours(search));
+      navigate(`/tours/search?searchQuery=${search}`);
+      // handleClear();
+    } else {
+      navigate("/");
+    }
+  };
+  const handleClear = () => {
+    setSearch("");
   };
   const { user } = useSelector((state) => ({ ...state.auth }));
   return (
@@ -39,6 +59,37 @@ const Header = () => {
           <MDBIcon icon="bars" fas />
         </MDBNavbarToggler>
         <MDBCollapse show={show} navbar>
+          <form
+            style={{ marginTop: "5px", textAlign: "center" }}
+            className="d-flex input-group w-auto"
+            onSubmit={handleSubmit}
+          >
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search Tour"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{ marginLeft: "5px" }}
+            />
+            {/* <div style={{ marginTop: "5px", marginLeft: "5px" }}>
+              <MDBIcon fas icon="search" />
+            </div> */}
+            {/* <Button
+              style={{ marginLeft: "4px" }}
+              variant="danger"
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button> */}
+            <Button
+              style={{ marginLeft: "4px" }}
+              variant="danger"
+              onClick={handleClear}
+            >
+              Clear
+            </Button>
+          </form>
           <MDBNavbarNav right fullWidth={false} className="mb-2 mb-lg-0">
             {user?.result?._id && (
               <h5 style={{ marginRight: "30px", marginTop: "28px" }}>
