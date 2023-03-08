@@ -27,8 +27,15 @@ const Dashboard = () => {
 
   // for dispalying popup of delete operation
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const handleClose = () => {
+    setShow(false);
+    setSelectedUser(null);
+  };
+  const handleShow = (item) => {
+    setShow(true);
+    setSelectedUser(item);
+  };
 
   useEffect(() => {
     if (userId) dispatch(getToursByUser(userId));
@@ -42,7 +49,7 @@ const Dashboard = () => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
+    // console.log(id);
     dispatch(deleteTour({ id, toast }));
     handleClose();
   };
@@ -63,7 +70,6 @@ const Dashboard = () => {
     >
       <h4 className="text-center">Dashboard: {user?.result?.name}</h4>
       <hr style={{ maxWidth: "570px" }} />
-
       {userTours &&
         userTours.map((item) => {
           return (
@@ -106,7 +112,7 @@ const Dashboard = () => {
                           <Modal show={show} onHide={handleClose}>
                             <Modal.Header closeButton>
                               <Modal.Title>
-                                Deleting The Tour :{item.title}
+                                Deleting The Tour : {selectedUser?.title}
                               </Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
@@ -118,7 +124,7 @@ const Dashboard = () => {
                               </Button>
                               <Button
                                 variant="danger"
-                                onClick={() => handleDelete(item._id)}
+                                onClick={() => handleDelete(selectedUser?._id)}
                               >
                                 Delete
                               </Button>
@@ -130,7 +136,7 @@ const Dashboard = () => {
                             style={{ color: "#dd4b39" }}
                             size="lg"
                             // onClick={() => handleDelete(item._id)}
-                            onClick={() => handleShow()}
+                            onClick={() => handleShow(item)}
                           />
                         </MDBBtn>
                         <Link to={`/editTour/${item._id}`}>
