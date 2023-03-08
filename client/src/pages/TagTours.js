@@ -7,6 +7,7 @@ import {
   MDBCardImage,
   MDBRow,
   MDBCol,
+  MDBIcon,
   MDBBtn,
   MDBCardGroup,
 } from "mdb-react-ui-kit";
@@ -41,12 +42,21 @@ const TagTours = () => {
         alignContent: "center",
       }}
     >
-      <h3 className="text-center">Tours with tag: {tag}</h3>
+      <h3 className="text-center">
+        Tours with tag <MDBIcon fas icon="tags" />: {tag}
+      </h3>
       <hr style={{ maxWidth: "570px" }} />
       {tagTours &&
         tagTours.map((item) => (
           <MDBCardGroup key={item._id}>
-            <MDBCard style={{ maxWidth: "600px" }} className="mt-2">
+            <MDBCard
+              style={{
+                maxWidth: "600px",
+                boxShadow:
+                  "rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px",
+              }}
+              className="mt-2 mb-2"
+            >
               <MDBRow className="g-0">
                 <MDBCol md="4">
                   <MDBCardImage
@@ -64,15 +74,10 @@ const TagTours = () => {
                     <MDBCardText className="text-start">
                       {excerpt(item.description, 40)}
                     </MDBCardText>
-                    <div style={{ float: "left", marginTop: "-10px" }}>
-                      {/* <MDBBtn
-                        size="sm"
-                        rounded
-                        color="info"
-                        onClick={() => navigate(`/tour/${item._id}`)}
-                      >
-                        Read More
-                      </MDBBtn> */}
+                    <div
+                      className="mb-2"
+                      style={{ float: "left", marginTop: "-10px" }}
+                    >
                       <Button
                         variant="secondary"
                         onClick={() => navigate(`/tour/${item._id}`)}
