@@ -60,7 +60,10 @@ const Header = () => {
         </MDBNavbarToggler>
         <MDBCollapse show={show} navbar>
           <form
-            style={{ marginTop: "5px", textAlign: "center" }}
+            style={{
+              marginTop: "5px",
+              alignContent: "center",
+            }}
             className="d-flex input-group w-auto"
             onSubmit={handleSubmit}
           >
@@ -72,9 +75,6 @@ const Header = () => {
               onChange={(e) => setSearch(e.target.value)}
               style={{ marginLeft: "5px" }}
             />
-            {/* <div style={{ marginTop: "5px", marginLeft: "5px" }}>
-              <MDBIcon fas icon="search" />
-            </div> */}
             {/* <Button
               style={{ marginLeft: "4px" }}
               variant="danger"

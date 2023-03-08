@@ -91,6 +91,18 @@ export const searchTours = createAsyncThunk(
   }
 );
 
+export const getToursByTag = createAsyncThunk(
+  "tour/getToursByTag",
+  async (tag, { rejectWithValue }) => {
+    try {
+      const response = await api.getTagTours(tag);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const tourSlice = createSlice({
   name: "tour",
   initialState: {
@@ -100,6 +112,8 @@ const tourSlice = createSlice({
     tours: [],
     // tours of logged in user.
     userTours: [],
+    // Tour of perticular searched tag
+    tagTours: [],
     error: "",
     loading: false,
   },
@@ -200,6 +214,17 @@ const tourSlice = createSlice({
       state.tours = action.payload;
     },
     [searchTours.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getToursByTag.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getToursByTag.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.tagTours = action.payload;
+    },
+    [getToursByTag.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

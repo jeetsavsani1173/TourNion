@@ -39,9 +39,28 @@ const CardTour = ({ imageFile, description, title, tags, _id, name }) => {
           }}
         />
         <div className="top-left">{name}</div>
-        <span className="text-start tag-card">
-          {tags.map((item) => `#${item} `)}
-        </span>
+        {/* <span className="text-start tag-card">
+          {tags.map((tag) => (
+            <Link to={`/tour/tag/${tag}`}>#{tag} </Link>
+          ))}
+        </span> */}
+        <div style={{ float: "left" }}>
+          {tags.map((item) => (
+            <Link to={`/tours/tag/${item}`}>
+              <span
+                key={item}
+                className="badge mt-2 mx-1"
+                style={{
+                  backgroundColor: "#e1ebf7",
+                  color: "#1a91eb",
+                  fontSize: "12px",
+                }}
+              >
+                {item}
+              </span>{" "}
+            </Link>
+          ))}
+        </div>
         <MDBCardBody>
           <MDBCardTitle className="text-start">{title}</MDBCardTitle>
           <MDBCardText className="text-start">

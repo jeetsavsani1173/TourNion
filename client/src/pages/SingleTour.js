@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import { getTour } from "../redux/features/tourSlice";
+import { Link } from "react-router-dom";
 // import { toast } from "react-toastify";
 
 const SingleTour = () => {
@@ -53,17 +54,19 @@ const SingleTour = () => {
               {tour &&
                 tour.tags &&
                 tour.tags.map((item) => (
-                  <span
-                    key={item}
-                    className="badge mt-2 mx-1"
-                    style={{
-                      backgroundColor: "#e1ebf7",
-                      color: "#1a91eb",
-                      fontSize: "15px",
-                    }}
-                  >
-                    {item}
-                  </span>
+                  <Link to={`/tours/tag/${item}`}>
+                    <span
+                      key={item}
+                      className="badge mt-2 mx-1"
+                      style={{
+                        backgroundColor: "#e1ebf7",
+                        color: "#1a91eb",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {item}
+                    </span>{" "}
+                  </Link>
                 ))}
               {/* </span> */}
             </div>
