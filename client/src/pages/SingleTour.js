@@ -10,14 +10,20 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import moment from "moment";
-import { getTour } from "../redux/features/tourSlice";
+import { getRelatedTours, getTour } from "../redux/features/tourSlice";
 import { Link } from "react-router-dom";
+import RelatedTours from "../components/RelatedTours";
 // import { toast } from "react-toastify";
 
 const SingleTour = () => {
   const dispatch = useDispatch();
-  const { tour } = useSelector((state) => ({ ...state.tour }));
+  const { tour, relatedTours } = useSelector((state) => ({ ...state.tour }));
   const { id } = useParams();
+  const tags = tour?.tags;
+
+  useEffect(() => {
+    tags && dispatch(getRelatedTours(tags));
+  }, [tags]);
 
   useEffect(() => {
     if (id) {
@@ -92,6 +98,10 @@ const SingleTour = () => {
               {tour.description}
             </MDBCardText>
           </MDBCardBody>
+        </MDBCard>
+        {/* Related Tours Section */}
+        <MDBCard style={{ marginTop: "50px", marginBottom: "60px" }}>
+          <RelatedTours relatedTours={relatedTours} tourId={id} />
         </MDBCard>
       </MDBContainer>
     </>

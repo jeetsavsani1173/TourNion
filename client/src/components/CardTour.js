@@ -53,7 +53,7 @@ const CardTour = ({ imageFile, description, title, tags, _id, name }) => {
                 style={{
                   backgroundColor: "#e1ebf7",
                   color: "#1a91eb",
-                  fontSize: "12px",
+                  fontSize: "13px",
                 }}
               >
                 {item}
