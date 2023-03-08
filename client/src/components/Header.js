@@ -3,7 +3,6 @@ import {
   MDBNavbar,
   MDBContainer,
   MDBIcon,
-  MDBBtn,
   MDBNavbarNav,
   MDBNavbarItem,
   MDBNavbarLink,

@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { register } from "../redux/features/authSlice";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const initialState = {
   firstName: "",
@@ -57,6 +58,11 @@ const Register = () => {
         boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px",
       }}
     >
+      <HelmetProvider>
+        <Helmet>
+          <title>Register</title>
+        </Helmet>
+      </HelmetProvider>
       <MDBCard alignment="center">
         <MDBIcon
           style={{ marginTop: "20px", marginBottom: "10px" }}

@@ -18,6 +18,7 @@ import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const Dashboard = () => {
   const { user } = useSelector((state) => ({ ...state.auth }));
@@ -68,6 +69,11 @@ const Dashboard = () => {
         alignContent: "center",
       }}
     >
+      <HelmetProvider>
+        <Helmet>
+          <title>Dashboard: {user?.result?.name}</title>
+        </Helmet>
+      </HelmetProvider>
       <h4 className="text-center">Dashboard: {user?.result?.name}</h4>
       <hr style={{ maxWidth: "570px" }} />
       {userTours &&

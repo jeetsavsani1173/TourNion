@@ -14,6 +14,7 @@ import { getRelatedTours, getTour } from "../redux/features/tourSlice";
 import { Link } from "react-router-dom";
 import RelatedTours from "../components/RelatedTours";
 // import { toast } from "react-toastify";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const SingleTour = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,11 @@ const SingleTour = () => {
   return (
     <>
       <MDBContainer>
+        <HelmetProvider>
+          <Helmet>
+            <title>Tour : {tour.title}</title>
+          </Helmet>
+        </HelmetProvider>
         <MDBCard
           className="mb-3"
           style={{

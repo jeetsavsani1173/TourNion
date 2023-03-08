@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createTour, updateTour } from "../redux/features/tourSlice";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const initialState = {
   title: "",
@@ -96,6 +97,11 @@ const AddEditTour = () => {
       }}
       className="container"
     >
+      <HelmetProvider>
+        <Helmet>
+          <title>Add/Edit Tour</title>
+        </Helmet>
+      </HelmetProvider>
       <MDBCard alignment="center">
         <h5>{id ? "Update Tour" : "Add Tour"}</h5>
         <MDBCardBody>

@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { googleSignIn, login } from "../redux/features/authSlice";
 // import { GoogleLogin } from "react-google-login";
 import { GoogleLogin } from "google-login-react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const initialState = {
   email: "",
@@ -66,6 +67,11 @@ const Login = () => {
         boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px",
       }}
     >
+      <HelmetProvider>
+        <Helmet>
+          <title>Login</title>
+        </Helmet>
+      </HelmetProvider>
       <MDBCard alignment="center">
         {/* <MDBIcon
           style={{ marginTop: "20px" }}
