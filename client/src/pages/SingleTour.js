@@ -34,11 +34,6 @@ const SingleTour = () => {
   return (
     <>
       <MDBContainer>
-        <HelmetProvider>
-          <Helmet>
-            <title>Tour : {tour.title}</title>
-          </Helmet>
-        </HelmetProvider>
         <MDBCard
           className="mb-3"
           style={{

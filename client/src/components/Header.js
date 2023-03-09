@@ -15,12 +15,23 @@ import { setLogout } from "../redux/features/authSlice";
 import Button from "react-bootstrap/Button";
 import { searchTours } from "../redux/features/tourSlice";
 import { useNavigate } from "react-router-dom";
+import decode from "jwt-decode";
 
 const Header = () => {
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState("");
+  const { user } = useSelector((state) => ({ ...state.auth }));
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const token = user?.token;
+
+  if (token) {
+    const decodeToken = decode(token);
+    if (decodeToken * 1000 < new Date().getTime()) {
+      dispatch(setLogout());
+    }
+  }
+
   const handleLogout = () => {
     dispatch(setLogout());
   };
@@ -38,7 +49,6 @@ const Header = () => {
   const handleClear = () => {
     setSearch("");
   };
-  const { user } = useSelector((state) => ({ ...state.auth }));
   return (
     <MDBNavbar fixed="top" expand="lg" style={{ backgroundColor: "#f0e6ea" }}>
       <MDBContainer>
