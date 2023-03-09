@@ -1,5 +1,5 @@
 import express from "express";
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
@@ -22,7 +22,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 // loading env variables
-// dotenv.config();
+dotenv.config();
 
 // connecting to database
 connectDB(app);
