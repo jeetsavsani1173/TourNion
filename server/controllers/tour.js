@@ -88,6 +88,11 @@ export const updateTour = async (req, res) => {
 export const getToursBySearch = async (req, res) => {
   const { searchQuery } = req.query;
   try {
+    // what is RegExp?
+    // regular expression is a sequence of characters that forms a search pattern
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+    // title is in this form : /searchQuery/i (i is for case insensitive)
+    // what is the meaning of case insensitive? => if we search for "tour" it will also return "Tour" and "TOUR"
     const title = new RegExp(searchQuery, "i");
     const tours = await TourModel.find({ title });
     res.json(tours);

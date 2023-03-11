@@ -11,7 +11,7 @@ import {
   MDBBtn,
   MDBCardGroup,
 } from "mdb-react-ui-kit";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { getToursByTag } from "../redux/features/tourSlice";
@@ -43,52 +43,60 @@ const TagTours = () => {
       }}
     >
       <h3 className="text-center">
-        Tours with tag <MDBIcon fas icon="tags" />: {tag}
+        Tours with tag <MDBIcon fas icon="tags" />: <span
+          className="badge mt-2 mx-1"
+          style={{
+            backgroundColor: "#e1ebf7",
+            color: "#1a91eb",
+          }}
+        >{tag}</span>
       </h3>
       <hr style={{ maxWidth: "570px" }} />
       {tagTours &&
         tagTours.map((item) => (
           <MDBCardGroup key={item._id}>
-            <MDBCard
-              style={{
-                maxWidth: "600px",
-                boxShadow:
-                  "rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px",
-              }}
-              className="mt-2 mb-2"
-            >
-              <MDBRow className="g-0">
-                <MDBCol md="4">
-                  <MDBCardImage
-                    className="rounded"
-                    src={item.imageFile}
-                    alt={item.title}
-                    fluid
-                  />
-                </MDBCol>
-                <MDBCol md="8">
-                  <MDBCardBody>
-                    <MDBCardTitle className="text-start">
-                      {item.title}
-                    </MDBCardTitle>
-                    <MDBCardText className="text-start">
-                      {excerpt(item.description, 40)}
-                    </MDBCardText>
-                    <div
-                      className="mb-2"
-                      style={{ float: "left", marginTop: "-10px" }}
-                    >
-                      <Button
-                        variant="secondary"
-                        onClick={() => navigate(`/tour/${item._id}`)}
+            <Link to={`/tour/${item._id}`}>
+              <MDBCard
+                style={{
+                  maxWidth: "600px",
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px",
+                }}
+                className="mt-2 mb-2"
+              >
+                <MDBRow className="g-0">
+                  <MDBCol md="4">
+                    <MDBCardImage
+                      className="rounded"
+                      src={item.imageFile}
+                      alt={item.title}
+                      fluid
+                    />
+                  </MDBCol>
+                  <MDBCol md="8">
+                    <MDBCardBody>
+                      <MDBCardTitle className="text-start">
+                        {item.title}
+                      </MDBCardTitle>
+                      <MDBCardText className="text-start">
+                        {excerpt(item.description, 90)}
+                      </MDBCardText>
+                      {/* <div
+                        className="mb-2"
+                        style={{ float: "left", marginTop: "-10px" }}
                       >
-                        Read More
-                      </Button>
-                    </div>
-                  </MDBCardBody>
-                </MDBCol>
-              </MDBRow>
-            </MDBCard>
+                        <Button
+                          variant="secondary"
+                          onClick={() => navigate(`/tour/${item._id}`)}
+                        >
+                          Read More
+                        </Button>
+                      </div> */}
+                    </MDBCardBody>
+                  </MDBCol>
+                </MDBRow>
+              </MDBCard>
+            </Link>
           </MDBCardGroup>
         ))}
     </div>
