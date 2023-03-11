@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
 
-export const createTour = createAsyncThunk(
+export const  createTour = createAsyncThunk(
   "tour/createTour",
   async ({ updatedTourData, navigate, toast }, { rejectWithValue }) => {
     try {
@@ -71,7 +71,7 @@ export const updateTour = createAsyncThunk(
     try {
       const response = await api.updateTour(id, updatedTourData);
       toast.success("Tour Updated Successfully");
-      navigate("/");
+      navigate("/dashboard");
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -124,7 +124,7 @@ const tourSlice = createSlice({
     tours: [],
     // tours of logged in user.
     userTours: [],
-    // Tour of perticular searched tag
+    // Tour of particular searched tag
     tagTours: [],
     // Related Tour state for showing related tour in singleTour page
     relatedTours: [],

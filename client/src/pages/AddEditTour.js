@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createTour, updateTour } from "../redux/features/tourSlice";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
+// initial state of tour
 const initialState = {
   title: "",
   description: "",
@@ -37,6 +38,7 @@ const AddEditTour = () => {
     if (id) {
       const singleTour = userTours.find((tour) => tour._id === id);
       setTourData({ ...singleTour });
+      setPreviewUrl(singleTour.imageFile);
     }
   }, [id]);
 
@@ -51,6 +53,7 @@ const AddEditTour = () => {
     setTourData({ title: "", description: "", tags: [] });
     setPreviewUrl(null);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!tags.length) {
@@ -71,20 +74,28 @@ const AddEditTour = () => {
       // navigate("/");
     }
   };
+
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setTourData({ ...tourData, [name]: value });
   };
+
   const handleAddTag = (tag) => {
     setTagErrMsg(null);
     setTourData({ ...tourData, tags: [...tourData.tags, tag] });
   };
+
   const handleDeleteTag = (deleteTag) => {
     setTourData({
       ...tourData,
       tags: tourData.tags.filter((tag) => tag !== deleteTag),
     });
   };
+
+  const handleGoBack = () => {
+    navigate('/dashboard');
+  };
+
   return (
     <div
       style={{
@@ -99,7 +110,7 @@ const AddEditTour = () => {
     >
       <HelmetProvider>
         <Helmet>
-          <title>Add/Edit Tour</title>
+          <title>{id ? 'Update' : 'Add'} Tour</title>
         </Helmet>
       </HelmetProvider>
       <MDBCard alignment="center">
@@ -120,7 +131,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
-                // validation="Please provide your email."
+              // validation="Please provide your email."
               />
             </MDBValidationItem>
             <MDBValidationItem
@@ -139,7 +150,7 @@ const AddEditTour = () => {
                 required
                 invalid
                 rows={4}
-                // validation="Please provide your email."
+              // validation="Please provide your email."
               />
             </MDBValidationItem>
             <div className="col-md-12">
@@ -163,6 +174,7 @@ const AddEditTour = () => {
                   setPreviewUrl(base64);
                 }}
               />
+
             </div>
             <div className="col-12">
               {previewUrl && (
@@ -180,6 +192,14 @@ const AddEditTour = () => {
                 onClick={handleClear}
               >
                 Clear
+              </MDBBtn>
+              <MDBBtn
+                style={{ width: "100%" }}
+                className="mt-2"
+                color="info"
+                onClick={handleGoBack}
+              >
+                Cancel
               </MDBBtn>
             </div>
           </MDBValidation>

@@ -77,6 +77,7 @@ export const updateTour = async (req, res) => {
       tags,
       _id: id,
     };
+    // by default findByIdAndUpdate returns the old object, so we need to pass { new: true } to get the updated object
     await TourModel.findByIdAndUpdate(id, updatedTour, { new: true });
     res.status(200).json(updatedTour);
   } catch (err) {
