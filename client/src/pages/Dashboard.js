@@ -100,7 +100,7 @@ const Dashboard = () => {
                   <MDBCol md="8">
                     <MDBCardBody>
                       <MDBCardTitle className="text-start">
-                        {item.title}
+                        <Link to={`/tour/${item._id}`}>{item.title}</Link>
                       </MDBCardTitle>
                       <MDBCardText className="text-start">
                         <small className="text-muted">

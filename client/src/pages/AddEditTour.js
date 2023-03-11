@@ -26,6 +26,7 @@ const initialState = {
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
   const [tagErrMsg, setTagErrMsg] = useState(null);
+  const [fileErrMsg,setFileErrMsg] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const { error, loading, userTours } = useSelector((state) => ({
     ...state.tour,
@@ -59,7 +60,10 @@ const AddEditTour = () => {
     if (!tags.length) {
       setTagErrMsg("Please provide some tags");
     }
-    if (title && description && tags) {
+    if(previewUrl===null){
+      setFileErrMsg('Please provide an image')
+    }
+    if (title && description && 0<tags.length && previewUrl) {
       const updatedTourData = { ...tourData, name: user?.result?.name };
 
       if (!id) {
@@ -148,7 +152,6 @@ const AddEditTour = () => {
                 onChange={onInputChange}
                 className="form-control"
                 required
-                invalid
                 rows={4}
               // validation="Please provide your email."
               />
@@ -173,9 +176,10 @@ const AddEditTour = () => {
                   setTourData({ ...tourData, imageFile: base64 });
                   setPreviewUrl(base64);
                 }}
+                required
               />
-
             </div>
+              {fileErrMsg && <div className="tagErrMsg">{fileErrMsg}</div>}
             <div className="col-12">
               {previewUrl && (
                 <img src={previewUrl} className="col-12" alt="Preview" />
