@@ -18,9 +18,9 @@ export const  createTour = createAsyncThunk(
 export const getTours = createAsyncThunk(
   "tour/getTours",
   // meaning of _ is the dispatch function, we are not providing any data from the client side
-  async (_, { rejectWithValue }) => {
+  async (page, { rejectWithValue }) => {
     try {
-      const response = await api.getTours();
+      const response = await api.getTours(page);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -128,8 +128,15 @@ const tourSlice = createSlice({
     tagTours: [],
     // Related Tour state for showing related tour in singleTour page
     relatedTours: [],
+    currentPage: 1,
+    numberOfPages: null,
     error: "",
     loading: false,
+  },
+  reducers: {
+    setCurrentPage : (state,action) => {
+      state.currentPage = action.payload;
+    }
   },
   extraReducers: {
     [createTour.pending]: (state, action) => {
@@ -148,7 +155,9 @@ const tourSlice = createSlice({
     },
     [getTours.fulfilled]: (state, action) => {
       state.loading = false;
-      state.tours = action.payload;
+      state.tours = action.payload.data;
+      state.currentPage = action.payload.currentPage;
+      state.numberOfPages = action.payload.numberOfPages;
     },
     [getTours.rejected]: (state, action) => {
       state.loading = false;
@@ -255,5 +264,7 @@ const tourSlice = createSlice({
     },
   },
 });
+
+export const {setCurrentPage} = tourSlice.actions;
 
 export default tourSlice.reducer;

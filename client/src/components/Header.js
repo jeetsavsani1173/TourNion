@@ -25,6 +25,7 @@ const Header = () => {
   const navigate = useNavigate();
   const token = user?.token;
 
+  // this is for checking if the token is expired or not
   if (token) {
     const decodeToken = decode(token);
     if (decodeToken * 1000 < new Date().getTime()) {
