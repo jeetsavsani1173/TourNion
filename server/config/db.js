@@ -6,8 +6,7 @@ const log = console.log;
 
 const connectDB = async (app) => {
     try {
-        // let dbLink = process.env.MONGO_URI;
-        let dbLink = 'mongodb+srv://tournionwebapp:TourNionWebApp@cluster0.vngvfvr.mongodb.net/tourNionDB?retryWrites=true&w=majority';
+        let dbLink = process.env.MONGO_URI;
         let port = 5000;
         const con = await mongoose.connect(dbLink)
             .then(() => {

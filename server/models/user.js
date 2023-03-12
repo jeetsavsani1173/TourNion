@@ -35,7 +35,6 @@ userSchema.methods.comparePassword = async function(password){
 }
 
 userSchema.methods.generateJWTToken = async function(){
-  const secretKey = 'Kj3bBeeT8rBJAWMnElFuYdpVyo3PjX@p2zQn6lj29skpDOcaV5cLIU6qRhQ33BPLxNq3YUP&jdHr7MnGQWwFN8yfkAj5rgj6YcddGa';
   // let secretKey = process.env.JWT_SECRET_KEY;
   let token = jwt.sign({email:this.email,id: this._id,},secretKey,{ expiresIn: '1h' });
   return token;
