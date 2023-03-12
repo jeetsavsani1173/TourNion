@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import RelatedTours from "../components/RelatedTours";
 // import { toast } from "react-toastify";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import DisqusThread from "../components/DisqusThread";
 
 const SingleTour = () => {
   const dispatch = useDispatch();
@@ -104,6 +105,7 @@ const SingleTour = () => {
         <MDBCard style={{ marginTop: "50px", marginBottom: "60px" }}>
           <RelatedTours relatedTours={relatedTours} tourId={id} />
         </MDBCard>
+        <DisqusThread id={id} title={tour.title} path={`/tour/${id}`} />
       </MDBContainer>
     </>
   );
