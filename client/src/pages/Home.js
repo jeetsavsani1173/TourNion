@@ -7,12 +7,14 @@ import Spinner from "../components/Spinner";
 import Pagination from "../components/Pagination";
 
 const Home = () => {
-  const { tours, loading, currentPage,numberOfPages } = useSelector((state) => ({ ...state.tour }));
+  const { tours, loading, currentPage, numberOfPages } = useSelector(
+    (state) => ({ ...state.tour })
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTours(currentPage));
-  }, [currentPage]);
+  }, [currentPage, dispatch]);
 
   // spinner
   if (loading) {
@@ -42,9 +44,14 @@ const Home = () => {
           </MDBContainer>
         </MDBCol>
       </MDBRow>
-      <Pagination setCurrentPage={setCurrentPage} numberOfPages={numberOfPages} currentPage={currentPage} dispatch={dispatch}/>
+      <Pagination
+        setCurrentPage={setCurrentPage}
+        numberOfPages={numberOfPages}
+        currentPage={currentPage}
+        dispatch={dispatch}
+      />
     </div>
   );
-}
+};
 
 export default Home;

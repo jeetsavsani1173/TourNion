@@ -9,7 +9,6 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 import ChipInput from "material-ui-chip-input";
-import FileBase from "react-file-base64";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,9 +26,8 @@ const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
   const [tagErrMsg, setTagErrMsg] = useState(null);
   const [fileErrMsg, setFileErrMsg] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
   const [image, setImage] = useState(null);
-  const { error, loading, userTours } = useSelector((state) => ({
+  const { error, userTours } = useSelector((state) => ({
     ...state.tour,
   }));
   const { user } = useSelector((state) => ({ ...state.auth }));
@@ -43,7 +41,7 @@ const AddEditTour = () => {
       // setPreviewUrl(singleTour.imageFile);
       setImage(singleTour.imageFile);
     }
-  }, [id]);
+  }, [id, userTours]);
 
   useEffect(() => {
     error && toast.error(error);
@@ -54,7 +52,6 @@ const AddEditTour = () => {
 
   const handleClear = () => {
     setTourData({ title: "", description: "", tags: [] });
-    setPreviewUrl(null);
     setImage([]);
   };
 
@@ -72,11 +69,13 @@ const AddEditTour = () => {
       if (!id) {
         // it is render for add tour page
         dispatch(createTour({ updatedTourData, navigator, toast }));
+        // dispatch(getTours());
         handleClear();
         navigate("/");
       } else {
         // it is render for edit tour page
         dispatch(updateTour({ id, updatedTourData, navigate, toast }));
+        navigate("/");
       }
       // navigate("/");
     }
@@ -85,16 +84,13 @@ const AddEditTour = () => {
   const handleImage = (e) => {
     const file = e.target.files[0];
     setFileToBase(file);
-    // console.log(file);
   };
 
   const setFileToBase = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      // setImage(reader.result);
       setTourData({ ...tourData, imageFile: reader.result });
-      // setPreviewUrl(reader.result);
       setImage(reader.result);
       console.log(reader.result);
     };
