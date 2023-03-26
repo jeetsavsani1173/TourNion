@@ -26,8 +26,9 @@ const initialState = {
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
   const [tagErrMsg, setTagErrMsg] = useState(null);
-  const [fileErrMsg,setFileErrMsg] = useState(null);
+  const [fileErrMsg, setFileErrMsg] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [image, setImage] = useState(null);
   const { error, loading, userTours } = useSelector((state) => ({
     ...state.tour,
   }));
@@ -39,7 +40,8 @@ const AddEditTour = () => {
     if (id) {
       const singleTour = userTours.find((tour) => tour._id === id);
       setTourData({ ...singleTour });
-      setPreviewUrl(singleTour.imageFile);
+      // setPreviewUrl(singleTour.imageFile);
+      setImage(singleTour.imageFile);
     }
   }, [id]);
 
@@ -53,6 +55,7 @@ const AddEditTour = () => {
   const handleClear = () => {
     setTourData({ title: "", description: "", tags: [] });
     setPreviewUrl(null);
+    setImage([]);
   };
 
   const handleSubmit = (e) => {
@@ -60,10 +63,10 @@ const AddEditTour = () => {
     if (!tags.length) {
       setTagErrMsg("Please provide some tags");
     }
-    if(previewUrl===null){
-      setFileErrMsg('Please provide an image')
+    if (image === null) {
+      setFileErrMsg("Please provide an image");
     }
-    if (title && description && 0<tags.length && previewUrl) {
+    if (title && description && 0 < tags.length && image) {
       const updatedTourData = { ...tourData, name: user?.result?.name };
 
       if (!id) {
@@ -77,6 +80,24 @@ const AddEditTour = () => {
       }
       // navigate("/");
     }
+  };
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setFileToBase(file);
+    // console.log(file);
+  };
+
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      // setImage(reader.result);
+      setTourData({ ...tourData, imageFile: reader.result });
+      // setPreviewUrl(reader.result);
+      setImage(reader.result);
+      console.log(reader.result);
+    };
   };
 
   const onInputChange = (e) => {
@@ -97,7 +118,7 @@ const AddEditTour = () => {
   };
 
   const handleGoBack = () => {
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   return (
@@ -114,7 +135,7 @@ const AddEditTour = () => {
     >
       <HelmetProvider>
         <Helmet>
-          <title>{id ? 'Update' : 'Add'} Tour</title>
+          <title>{id ? "Update" : "Add"} Tour</title>
         </Helmet>
       </HelmetProvider>
       <MDBCard alignment="center">
@@ -135,7 +156,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
-              // validation="Please provide your email."
+                // validation="Please provide your email."
               />
             </MDBValidationItem>
             <MDBValidationItem
@@ -153,7 +174,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 rows={4}
-              // validation="Please provide your email."
+                // validation="Please provide your email."
               />
             </MDBValidationItem>
             <div className="col-md-12">
@@ -169,21 +190,31 @@ const AddEditTour = () => {
               {tagErrMsg && <div className="tagErrMsg">{tagErrMsg}</div>}
             </div>
             <div className="d-flex justify-content-start">
-              <FileBase
+              {/* <FileBase
                 type="file"
                 multiple={false}
+                // onDone={({ base64 }) => {
+                //   setTourData({ ...tourData, imageFile: base64 });
+                //   setPreviewUrl(base64);
+                // }}
                 onDone={({ base64 }) => {
-                  setTourData({ ...tourData, imageFile: base64 });
-                  setPreviewUrl(base64);
+                  setFileToBase(base64);
                 }}
                 required
-              />
+              /> */}
+              <div className="form-outline mb-4">
+                <input
+                  type="file"
+                  id="formupload"
+                  onChange={handleImage}
+                  name="image"
+                  className="form-control"
+                />
+              </div>
             </div>
-              {fileErrMsg && <div className="tagErrMsg">{fileErrMsg}</div>}
+            {fileErrMsg && <div className="tagErrMsg">{fileErrMsg}</div>}
             <div className="col-12">
-              {previewUrl && (
-                <img src={previewUrl} className="col-12" alt="Preview" />
-              )}
+              {image && <img src={image} className="col-12" alt="Preview" />}
             </div>
             <div className="col-12">
               <MDBBtn style={{ width: "100%" }}>

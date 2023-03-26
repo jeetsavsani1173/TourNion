@@ -1,9 +1,19 @@
 import express from "express";
 import mongoose from "mongoose";
 import TourModel from "../models/tour.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const createTour = async (req, res) => {
   const tour = req.body;
+  let result;
+  try {
+    result = await cloudinary.uploader.upload(tour.imageFile, {
+      folder: "TourNion",
+    });
+  } catch (err) {
+    res.status(404).json({ message: "Something went wrong." });
+  }
+  tour.imageFile = result.secure_url;
   const newTour = new TourModel({
     ...tour,
     creator: req.userId,
@@ -19,21 +29,21 @@ export const createTour = async (req, res) => {
 };
 
 export const getTours = async (req, res) => {
-  const {page} = req.query;
+  const { page } = req.query;
   try {
     // const tours = await TourModel.find();
     // res.status(200).json(tours);
     const limit = 6;
-    const startIndex = (Number(page)-1)*limit;
+    const startIndex = (Number(page) - 1) * limit;
     const total = await TourModel.countDocuments({});
     const tours = await TourModel.find().limit(limit).skip(startIndex);
 
     res.json({
-      data : tours,
-      currentPage : Number(page),
+      data: tours,
+      currentPage: Number(page),
       totalHours: total,
-      numberOfPages : Math.ceil(total/limit),
-    })
+      numberOfPages: Math.ceil(total / limit),
+    });
   } catch (err) {
     res.status(404).json({ message: "Something went wrong." });
   }
