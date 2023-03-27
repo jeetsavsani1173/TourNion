@@ -7,9 +7,9 @@ import {
   MDBCardImage,
   MDBCardGroup,
   MDBBtn,
-  MDBIcon,
   MDBTooltip,
 } from "mdb-react-ui-kit";
+import { Provider, LikeButton } from "@lyket/react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { likeTour } from "../redux/features/tourSlice";
@@ -39,40 +39,56 @@ const CardTour = ({
   };
 
   const Likes = () => {
-    // return (
-    //   <>
-    //     <MDBIcon far icon="thumbs-up" />
-    //     &nbsp;Like
-    //   </>
-    // );
     if (likes.length > 0) {
       return likes.find((like) => like === userId) ? (
-        <>
-          <MDBIcon fas icon="thumbs-up" />
+        <Provider
+          theme={{
+            colors: {
+              background: "#b8fff3",
+              text: "violet",
+              primary: "rgba(255, 224, 138, 0.4)",
+            },
+          }}
+        >
+          <LikeButton namespace="testing-react" id="everybody-like-now" />
           &nbsp;
-          {likes.length > 2 ? (
-            <MDBTooltip
-              tag="a"
-              title={`You and ${likes.length - 1} other people likes`}
-            >
-              {likes.length} Likes
-            </MDBTooltip>
-          ) : (
-            `${likes.length} Like${likes.length > 1 ? "s" : ""}`
-          )}
-        </>
+          <div style={{ marginTop: "auto" }}>
+            {likes.length > 2 ? (
+              <MDBTooltip
+                tag="a"
+                title={`You and ${likes.length - 1} other people likes`}
+              >
+                {likes.length} Likes
+              </MDBTooltip>
+            ) : (
+              `${likes.length} Like${likes.length > 1 ? "s" : ""}`
+            )}
+          </div>
+        </Provider>
       ) : (
         <>
-          <MDBIcon far icon="thumbs-up" />
-          &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
+          <LikeButton namespace="testing-react" id="everybody-like-now" />
+          &nbsp;
+          <div style={{ marginTop: "auto" }}>
+            {likes.length} {likes.length === 1 ? "Like" : "Likes"}
+          </div>
         </>
       );
     }
     return (
-      <>
-        <MDBIcon far icon="thumbs-up" />
-        &nbsp;Like
-      </>
+      <Provider
+        theme={{
+          colors: {
+            background: "#b8fff3",
+            text: "violet",
+            primary: "rgba(255, 224, 138, 0.4)",
+          },
+        }}
+      >
+        <LikeButton namespace="testing-react" id="everybody-like-now" />
+        &nbsp;
+        <div style={{ marginTop: "auto" }}>Like</div>
+      </Provider>
     );
   };
 
@@ -95,11 +111,6 @@ const CardTour = ({
           }}
         />
         <div className="top-left">{name}</div>
-        {/* <span className="text-start tag-card">
-          {tags.map((tag) => (
-            <Link to={`/tour/tag/${tag}`}>#{tag} </Link>
-          ))}
-        </span> */}
         <div style={{ float: "left" }}>
           {tags.map((item) => (
             <Link to={`/tours/tag/${item}`}>
@@ -116,8 +127,16 @@ const CardTour = ({
               </span>{" "}
             </Link>
           ))}
+        </div>
+        <MDBCardBody>
+          <MDBCardTitle className="text-start">{title}</MDBCardTitle>
+          <MDBCardText className="text-start">
+            {excerpt(description)}
+            <Link to={`/tour/${_id}`}> Read More.</Link>
+          </MDBCardText>
+        </MDBCardBody>
+        <MDBCardBody style={{ marginBottom: "-20px" }}>
           <MDBBtn
-            style={{ float: "right" }}
             tag="a"
             color="none"
             onClick={!user?.result ? null : handleLike}
@@ -130,13 +149,6 @@ const CardTour = ({
               <Likes />
             )}
           </MDBBtn>
-        </div>
-        <MDBCardBody>
-          <MDBCardTitle className="text-start">{title}</MDBCardTitle>
-          <MDBCardText className="text-start">
-            {excerpt(description)}
-            <Link to={`/tour/${_id}`}> Read More.</Link>
-          </MDBCardText>
         </MDBCardBody>
       </MDBCard>
     </MDBCardGroup>
