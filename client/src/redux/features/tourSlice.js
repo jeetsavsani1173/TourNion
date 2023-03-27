@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
 
-export const  createTour = createAsyncThunk(
+export const createTour = createAsyncThunk(
   "tour/createTour",
   async ({ updatedTourData, navigate, toast }, { rejectWithValue }) => {
     try {
@@ -33,6 +33,18 @@ export const getTour = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await api.getTour(id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const likeTour = createAsyncThunk(
+  "tour/likeTour",
+  async ({ _id }, { rejectWithValue }) => {
+    try {
+      const response = await api.likeTour(_id);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -134,9 +146,9 @@ const tourSlice = createSlice({
     loading: false,
   },
   reducers: {
-    setCurrentPage : (state,action) => {
+    setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
-    }
+    },
   },
   extraReducers: {
     [createTour.pending]: (state, action) => {
@@ -229,6 +241,24 @@ const tourSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
+    [likeTour.pending]: (state, action) => {},
+    [likeTour.fulfilled]: (state, action) => {
+      state.loading = false;
+      const {
+        arg: { _id },
+      } = action.meta;
+      // what is action.meta?
+      // action.meta is an object that contains information about the action that was dispatched.
+      // action.meta.arg is the argument that was passed to the action creator.
+      if (_id) {
+        state.tours = state.tours.map((tour) =>
+          tour._id === _id ? action.payload : tour
+        );
+      }
+    },
+    [likeTour.rejected]: (state, action) => {
+      state.error = action.payload.message;
+    },
     [searchTours.pending]: (state, action) => {
       state.loading = true;
     },
@@ -265,6 +295,6 @@ const tourSlice = createSlice({
   },
 });
 
-export const {setCurrentPage} = tourSlice.actions;
+export const { setCurrentPage } = tourSlice.actions;
 
 export default tourSlice.reducer;

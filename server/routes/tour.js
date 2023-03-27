@@ -11,6 +11,7 @@ import {
   getToursBySearch,
   getToursByTags,
   getToursByUser,
+  likeTour,
   updateTour,
 } from "../controllers/tour.js";
 
@@ -20,6 +21,7 @@ router.get("/search", getToursBySearch);
 router.post("/relatedTours", getRelatedTours);
 router.get("/tag/:tag", getToursByTags);
 router.get("/userTours/:id", auth, getToursByUser);
+router.patch("/like/:id", auth, likeTour);
 router.patch("/:id", auth, updateTour);
 router.delete("/:id", auth, deleteTour);
 router.get("/:id", getTour);

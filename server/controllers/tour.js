@@ -144,7 +144,7 @@ export const getRelatedTours = async (req, res) => {
 };
 
 export const likeTour = async (req, res) => {
-  const { id } = req.params();
+  const { id } = req.params;
   try {
     if (!req.userId) {
       return res.json({ message: "User is not authenticated" });
@@ -168,7 +168,7 @@ export const likeTour = async (req, res) => {
       new: true,
     });
 
-    res.status(200).json(updateTour);
+    res.status(200).json(updatedTour);
   } catch (err) {
     res.status(404).json({ message: error.message });
   }
