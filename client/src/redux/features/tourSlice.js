@@ -5,13 +5,15 @@ export const createTour = createAsyncThunk(
   "tour/createTour",
   async ({ updatedTourData, navigate, toast }, { rejectWithValue }) => {
     try {
-      const response = await api.createTour(updatedTourData);
+      const response = await api.createTour(updatedTourData)
       toast.success("Tour Added Successfully");
-      navigate("/");
-      return response.data;
+      // // navigate("/");
+      // window.location.href = '/';
+      // return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
+    return window.location.href = '/';
   }
 );
 
@@ -241,7 +243,7 @@ const tourSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
-    [likeTour.pending]: (state, action) => {},
+    [likeTour.pending]: (state, action) => { },
     [likeTour.fulfilled]: (state, action) => {
       state.loading = false;
       const {

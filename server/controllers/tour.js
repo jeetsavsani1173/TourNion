@@ -36,7 +36,7 @@ export const getTours = async (req, res) => {
     const limit = 6;
     const startIndex = (Number(page) - 1) * limit;
     const total = await TourModel.countDocuments({});
-    const tours = await TourModel.find().limit(limit).skip(startIndex);
+    const tours = await TourModel.find().sort({createdAt : -1}).limit(limit).skip(startIndex);
 
     res.json({
       data: tours,

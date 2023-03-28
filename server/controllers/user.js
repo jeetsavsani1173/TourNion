@@ -21,7 +21,7 @@ export const signin = async (req, res) => {
     }
 
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
     res.status(200).json({ result: oldUser, token });
@@ -49,7 +49,7 @@ export const signup = async (req, res) => {
     });
 
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
     sendMail(email);
     res.status(201).json({ result, token });
@@ -67,7 +67,7 @@ export const googleSignIn = async (req, res) => {
     if (oldUser) {
       const result = { _id: oldUser._id.toString(), email, name };
       const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-        expiresIn: "1h",
+        expiresIn: "24h",
       });
       return res.status(200).json({ result, token });
     }
@@ -79,7 +79,7 @@ export const googleSignIn = async (req, res) => {
     });
     sendMail(email);
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
 

@@ -9,7 +9,7 @@ import {
   MDBBtn,
   MDBTooltip,
 } from "mdb-react-ui-kit";
-import { Provider, LikeButton } from "@lyket/react";
+import { Provider, LikeButton,ClapButton } from "@lyket/react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { likeTour } from "../redux/features/tourSlice";
@@ -76,19 +76,13 @@ const CardTour = ({
       );
     }
     return (
-      <Provider
-        theme={{
-          colors: {
-            background: "#b8fff3",
-            text: "violet",
-            primary: "rgba(255, 224, 138, 0.4)",
-          },
-        }}
-      >
+      <>
         <LikeButton namespace="testing-react" id="everybody-like-now" />
         &nbsp;
-        <div style={{ marginTop: "auto" }}>Like</div>
-      </Provider>
+        <div style={{ marginTop: "auto" }}>
+          {likes.length} {likes.length === 1 ? "Like" : "Likes"}
+        </div>
+      </>
     );
   };
 
