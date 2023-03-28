@@ -24,19 +24,20 @@ const userSchema = mongoose.Schema({
   },
 });
 
-// userSchema.pre('save',async function(){
-//   let salt = await bcrypt.genSalt(15);
-//   if(this.password !== undefined)
-//       this.password = await bcrypt.hash(this.password,salt);
-// })
+userSchema.pre('save',async function(){
+  let salt = await bcrypt.genSalt(15);
+  if(this.password !== undefined)
+      this.password = await bcrypt.hash(this.password,salt);
+})
 
 userSchema.methods.comparePassword = async function(password){
+  if(this.password === undefined) return false;
   return await bcrypt.compare(password,this.password);
 }
 
 userSchema.methods.generateJWTToken = async function(){
-  // let secretKey = process.env.JWT_SECRET_KEY;
-  let token = jwt.sign({email:this.email,id: this._id,},secretKey,{ expiresIn: '1h' });
+  let secretKey = process.env.JWT_SECRET_KEY;
+  let token = jwt.sign({email:this.email,id: this._id,},secretKey,{ expiresIn: '24h' });
   return token;
 }
 

@@ -4,8 +4,6 @@ import UserModal from "../models/user.js";
 
 import sendMail from "../config/mail.js";
 
-const secret = "test";
-
 export const signin = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -14,15 +12,13 @@ export const signin = async (req, res) => {
       return res.status(400).json({ message: "User Does Not exists" });
     }
 
-    const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
+    const isPasswordCorrect = await oldUser.comparePassword(password);
     if (!isPasswordCorrect) {
       // password is incorrect section
       return res.status(400).json({ message: "Invalid Credentials" });
     }
 
-    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
-      expiresIn: "24h",
-    });
+    const token = await oldUser.generateJWTToken();
 
     res.status(200).json({ result: oldUser, token });
   } catch (err) {
@@ -40,17 +36,14 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "User Already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-
     const result = await UserModal.create({
       email,
-      password: hashedPassword,
+      password,
       name: `${firstName} ${lastName}`,
     });
 
-    const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-      expiresIn: "24h",
-    });
+    const token = await result.generateJWTToken();
+
     sendMail(email);
     res.status(201).json({ result, token });
   } catch (err) {
@@ -66,9 +59,7 @@ export const googleSignIn = async (req, res) => {
     const oldUser = await UserModal.findOne({ email });
     if (oldUser) {
       const result = { _id: oldUser._id.toString(), email, name };
-      const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-        expiresIn: "24h",
-      });
+      const token = await oldUser.generateJWTToken();
       return res.status(200).json({ result, token });
     }
 
@@ -78,10 +69,7 @@ export const googleSignIn = async (req, res) => {
       googleId,
     });
     sendMail(email);
-    const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-      expiresIn: "24h",
-    });
-
+    const token = await result.generateJWTToken();
 
     res.status(200).json({ result, token });
   } catch (err) {
