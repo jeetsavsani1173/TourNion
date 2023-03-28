@@ -8,11 +8,17 @@ import {
   MDBCardGroup,
   MDBBtn,
   MDBTooltip,
+  MDBIcon,
+  MDBCol,
+  MDBContainer,
+  MDBRow,
 } from "mdb-react-ui-kit";
-import { Provider, LikeButton,ClapButton } from "@lyket/react";
-import { Link } from "react-router-dom";
+import { Provider, LikeButton, ClapButton } from "@lyket/react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { likeTour } from "../redux/features/tourSlice";
+import { toast } from "react-toastify";
+
 
 const CardTour = ({
   imageFile,
@@ -24,6 +30,7 @@ const CardTour = ({
   likes,
 }) => {
   const { user } = useSelector((state) => ({ ...state.auth }));
+  const navigate = useNavigate();
   // const userId = user?.result?._id || user?.result?.googleId;
   const userId = user?.result?._id || user?.result?.googleId;
   const dispatch = useDispatch();
@@ -88,13 +95,11 @@ const CardTour = ({
 
   return (
     <MDBCardGroup
-      className="mb-4"
-      style={{
-        boxShadow:
-          "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px",
-      }}
+      className="mb-4 justify-content-center"
+      
     >
-      <MDBCard className="h-100 mt-2 d-sm-flex" style={{ maxWidth: "20rem" }}>
+      <MDBCard className="h-100 mt-2 d-md-flex mx-lg-2 mx-md-auto mx-auto" style={{ maxWidth: "20rem",boxShadow:
+          "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px",}}>
         <MDBCardImage
           src={imageFile}
           alt={title}
@@ -130,19 +135,52 @@ const CardTour = ({
           </MDBCardText>
         </MDBCardBody>
         <MDBCardBody style={{ marginBottom: "-20px" }}>
-          <MDBBtn
-            tag="a"
-            color="none"
-            onClick={!user?.result ? null : handleLike}
-          >
-            {!user?.result ? (
-              <MDBTooltip title="Please login to like tour" tag="a">
-                <Likes />
-              </MDBTooltip>
-            ) : (
-              <Likes />
-            )}
-          </MDBBtn>
+          <MDBContainer>
+            <MDBRow>
+              <MDBCol>
+                <MDBBtn
+                  tag="a"
+                  color="none"
+                  onClick={!user?.result ? null : handleLike}
+                >
+                  {!user?.result ? (
+                    <MDBTooltip title="Please login to like tour" tag="a">
+                      <Likes />
+                    </MDBTooltip>
+                  ) : (
+                    <Likes />
+                  )}
+                </MDBBtn>
+              </MDBCol>
+              <MDBCol>
+                <div
+                  style={{
+                    fontSize: "20px",
+                    height: "50px",
+                    width: "50px",
+                  }}
+                  className="shareButton"
+                >
+                  <MDBIcon style={{ marginTop: "15px" }} fas icon="comment" onClick={() => navigate(`/tour/${_id}`)}/>
+                </div>
+              </MDBCol>
+              <MDBCol>
+                <div
+                  style={{
+                    fontSize: "20px",
+                    height: "50px",
+                    width: "50px",
+                  }}
+                  className="shareButton"
+                >
+                  <MDBIcon style={{ marginTop: "15px" }} fas icon="share" onClick={() => {
+                    navigator.clipboard.writeText(`http://localhost:3000/tour/${_id}`);
+                    toast.info('Link Copied to Clipboard');
+                  }}/>
+                </div>
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
         </MDBCardBody>
       </MDBCard>
     </MDBCardGroup>

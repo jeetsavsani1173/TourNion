@@ -75,3 +75,18 @@ h4:after {
   left: 0.5em;
   margin-right: -50%;
 }
+
+
+/* like, comment, share styling */
+.shareButton {
+  width: auto;
+  height: auto;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.2s ease-in-out;
+}
+
+.shareButton:hover {
+  background-color: #b8fff3;
+}
+
