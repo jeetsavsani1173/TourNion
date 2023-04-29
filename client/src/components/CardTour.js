@@ -13,7 +13,7 @@ import {
   MDBContainer,
   MDBRow,
 } from "mdb-react-ui-kit";
-import { Provider, LikeButton, ClapButton } from "@lyket/react";
+import { Provider, LikeButton } from "@lyket/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { likeTour } from "../redux/features/tourSlice";
@@ -31,7 +31,6 @@ const CardTour = ({
 }) => {
   const { user } = useSelector((state) => ({ ...state.auth }));
   const navigate = useNavigate();
-  // const userId = user?.result?._id || user?.result?.googleId;
   const userId = user?.result?._id || user?.result?.googleId;
   const dispatch = useDispatch();
   const excerpt = (str) => {
@@ -161,7 +160,7 @@ const CardTour = ({
                   }}
                   className="shareButton"
                 >
-                  <MDBIcon style={{ marginTop: "15px" }} fas icon="comment" onClick={() => navigate(`/tour/${_id}`)}/>
+                  <MDBIcon style={{ marginTop: "15px" }} fas icon="comment" onClick={() => navigate(`/tour/${_id}#comments`)}/>
                 </div>
               </MDBCol>
               <MDBCol>

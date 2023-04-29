@@ -1,25 +1,34 @@
 import React, { useEffect } from "react";
 import {
+  MDBBtn,
   MDBCard,
   MDBCardBody,
   MDBCardImage,
   MDBCardText,
+  MDBCol,
   MDBContainer,
   MDBIcon,
+  MDBRow,
+  MDBTooltip,
 } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
-import { getRelatedTours, getTour } from "../redux/features/tourSlice";
+import { getRelatedTours, getTour, likeTour } from "../redux/features/tourSlice";
 import { Link } from "react-router-dom";
 import RelatedTours from "../components/RelatedTours";
 // import { toast } from "react-toastify";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import DisqusThread from "../components/DisqusThread";
+import { LikeButton } from "@lyket/react";
+import { toast } from "react-toastify";
+import Likes from "../components/Likes";
 
 const SingleTour = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { tour, relatedTours } = useSelector((state) => ({ ...state.tour }));
+  const { user } = useSelector((state) => ({ ...state.auth }));
   const { id } = useParams();
   const tags = tour?.tags;
 
@@ -32,6 +41,12 @@ const SingleTour = () => {
       dispatch(getTour(id));
     }
   }, [id]);
+
+  const handleLike = () => {
+    let res = dispatch(likeTour({ _id: id }));
+    res && window.location.reload()
+  };
+
   return (
     <>
       <MDBContainer>
@@ -53,7 +68,56 @@ const SingleTour = () => {
             alt={tour.title}
           />
           <MDBCardBody>
-            <h3>{tour?.title}</h3>
+            <MDBRow>
+              <MDBCol size={'12'}><h3>{tour?.title}</h3></MDBCol>
+            </MDBRow>
+            <MDBRow className="mb-2">
+              <MDBCol className="text-start d-flex justify-content-start" style={{ marginTop: '-10px' }}>
+                <div>
+                  {tour.likes &&
+                    <MDBBtn
+                      tag="a"
+                      color="none"
+                      onClick={!user?.result ? null : handleLike}
+                    >
+                      {!user?.result ? (
+                        <MDBTooltip title="Please login to like tour" tag="a">
+                          <Likes likes={tour.likes} _id={id} />
+                        </MDBTooltip>
+                      ) : (
+                        <Likes likes={tour.likes} _id={id} />
+                      )}
+                    </MDBBtn>
+                    // <Likes likes={tour.likes} _id={id} />
+                  }
+                </div>
+                {/* <LikeButton namespace="testing-react" id="everybody-like-now" /> */}
+                <div
+                  style={{
+                    fontSize: "20px",
+                    height: "50px",
+                    width: "50px",
+                  }}
+                  className="shareButton"
+                >
+                  <MDBIcon style={{ marginTop: "15px", marginLeft: "15px"}} fas icon="share" onClick={() => {
+                    navigator.clipboard.writeText(`http://localhost:3000/tour/${id}`);
+                    toast.info('Link Copied to Clipboard');
+                  }} />
+                </div>
+                <div
+                  style={{
+                    fontSize: "20px",
+                    height: "50px",
+                    width: "50px",
+                  }}
+                  className="shareButton"
+                >
+                  <MDBIcon style={{ marginTop: "15px", marginLeft: "15px"}} fas icon="comment" onClick={() => window.location.href = '#comments'}/>
+                </div>
+              </MDBCol>
+            </MDBRow>
+
             <span>
               <p className="text-start tourName">Created By: {tour.name}</p>
             </span>
@@ -106,6 +170,8 @@ const SingleTour = () => {
           <RelatedTours relatedTours={relatedTours} tourId={id} />
         </MDBCard>
         <DisqusThread id={id} title={tour.title} path={`/tour/${id}`} />
+        <div id="comments">
+        </div>
       </MDBContainer>
     </>
   );
