@@ -23,6 +23,8 @@ import DisqusThread from "../components/DisqusThread";
 import { LikeButton } from "@lyket/react";
 import { toast } from "react-toastify";
 import Likes from "../components/Likes";
+import ReactMarkdown from 'react-markdown';
+
 
 const SingleTour = () => {
   const dispatch = useDispatch();
@@ -51,7 +53,7 @@ const SingleTour = () => {
     <>
       <MDBContainer>
         <MDBCard
-          className="mb-3"
+          className="mb-3 tourHover"
           style={{
             marginTop: "90px",
             boxShadow:
@@ -160,8 +162,11 @@ const SingleTour = () => {
                 {moment(tour.createdAt).fromNow()}
               </small>
             </MDBCardText>
-            <MDBCardText className="lead mb-0 text-start">
+            {/* <MDBCardText className="lead mb-0 text-start">
               {tour.description}
+            </MDBCardText> */}
+            <MDBCardText className="lead mb-0 text-start">
+            <ReactMarkdown>{tour.description}</ReactMarkdown>
             </MDBCardText>
           </MDBCardBody>
         </MDBCard>

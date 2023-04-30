@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createTour, updateTour } from "../redux/features/tourSlice";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 // initial state of tour
 const initialState = {
@@ -27,6 +28,8 @@ const AddEditTour = () => {
   const [tagErrMsg, setTagErrMsg] = useState(null);
   const [fileErrMsg, setFileErrMsg] = useState(null);
   const [image, setImage] = useState(null);
+  const [markdownContent, setMarkdownContent] = useState('');
+
   const { error, userTours } = useSelector((state) => ({
     ...state.tour,
   }));
@@ -52,7 +55,8 @@ const AddEditTour = () => {
 
   const handleClear = () => {
     setTourData({ title: "", description: "", tags: [] });
-    setImage([]);
+    setImage(null);
+    setMarkdownContent('');
   };
 
   const handleSubmit = (e) => {
@@ -99,6 +103,9 @@ const AddEditTour = () => {
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setTourData({ ...tourData, [name]: value });
+    if (name === 'description') {
+      setMarkdownContent(value);
+    }
   };
 
   const handleAddTag = (tag) => {
@@ -117,14 +124,16 @@ const AddEditTour = () => {
     navigate("/dashboard");
   };
 
+
   return (
     <div
       style={{
         margin: "auto",
         padding: "15px",
-        maxWidth: "500px",
+        maxWidth: "900px",
         alignContent: "center",
         marginTop: "120px",
+        marginBottom: "30px",
         boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px",
       }}
       className="container"
@@ -152,7 +161,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
-                // validation="Please provide your email."
+              // validation="Please provide your email."
               />
             </MDBValidationItem>
             <MDBValidationItem
@@ -169,9 +178,14 @@ const AddEditTour = () => {
                 onChange={onInputChange}
                 className="form-control"
                 required
-                rows={4}
-                // validation="Please provide your email."
+                rows={6}
+              // validation="Please provide your email."
               />
+              {markdownContent &&
+                <div className="col-12 text-start border border-primary mt-3 px-2 py-1">
+                  <ReactMarkdown>{markdownContent}</ReactMarkdown>
+                </div>
+              }
             </MDBValidationItem>
             <div className="col-md-12">
               <ChipInput
