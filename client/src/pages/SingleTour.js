@@ -12,23 +12,22 @@ import {
   MDBTooltip,
 } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import moment from "moment";
-import { getRelatedTours, getTour, likeTour } from "../redux/features/tourSlice";
+import {
+  getRelatedTours,
+  getTour,
+  likeTour,
+} from "../redux/features/tourSlice";
 import { Link } from "react-router-dom";
 import RelatedTours from "../components/RelatedTours";
-// import { toast } from "react-toastify";
-import { Helmet, HelmetProvider } from "react-helmet-async";
 import DisqusThread from "../components/DisqusThread";
-import { LikeButton } from "@lyket/react";
 import { toast } from "react-toastify";
 import Likes from "../components/Likes";
-import ReactMarkdown from 'react-markdown';
-
+import ReactMarkdown from "react-markdown";
 
 const SingleTour = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { tour, relatedTours } = useSelector((state) => ({ ...state.tour }));
   const { user } = useSelector((state) => ({ ...state.auth }));
   const { id } = useParams();
@@ -36,17 +35,19 @@ const SingleTour = () => {
 
   useEffect(() => {
     tags && dispatch(getRelatedTours(tags));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags]);
 
   useEffect(() => {
     if (id) {
       dispatch(getTour(id));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleLike = () => {
     let res = dispatch(likeTour({ _id: id }));
-    res && window.location.reload()
+    res && window.location.reload();
   };
 
   return (
@@ -71,25 +72,32 @@ const SingleTour = () => {
           />
           <MDBCardBody>
             <MDBRow>
-              <MDBCol size={'12'}><h3>{tour?.title}</h3></MDBCol>
+              <MDBCol size={"12"}>
+                <h3>{tour?.title}</h3>
+              </MDBCol>
             </MDBRow>
             <MDBRow className="mb-2">
-              <MDBCol className="text-start d-flex justify-content-start" style={{ marginTop: '-10px' }}>
+              <MDBCol
+                className="text-start d-flex justify-content-start"
+                style={{ marginTop: "-10px" }}
+              >
                 <div>
-                  {tour.likes &&
-                    <MDBBtn
-                      tag="a"
-                      color="none"
-                      onClick={!user?.result ? null : handleLike}
-                    >
-                      {!user?.result ? (
-                        <MDBTooltip title="Please login to like tour" tag="a">
+                  {
+                    tour.likes && (
+                      <MDBBtn
+                        tag="a"
+                        color="none"
+                        onClick={!user?.result ? null : handleLike}
+                      >
+                        {!user?.result ? (
+                          <MDBTooltip title="Please login to like tour" tag="a">
+                            <Likes likes={tour.likes} _id={id} />
+                          </MDBTooltip>
+                        ) : (
                           <Likes likes={tour.likes} _id={id} />
-                        </MDBTooltip>
-                      ) : (
-                        <Likes likes={tour.likes} _id={id} />
-                      )}
-                    </MDBBtn>
+                        )}
+                      </MDBBtn>
+                    )
                     // <Likes likes={tour.likes} _id={id} />
                   }
                 </div>
@@ -102,10 +110,17 @@ const SingleTour = () => {
                   }}
                   className="shareButton"
                 >
-                  <MDBIcon style={{ marginTop: "15px", marginLeft: "15px"}} fas icon="share" onClick={() => {
-                    navigator.clipboard.writeText(`http://localhost:3000/tour/${id}`);
-                    toast.info('Link Copied to Clipboard');
-                  }} />
+                  <MDBIcon
+                    style={{ marginTop: "15px", marginLeft: "15px" }}
+                    fas
+                    icon="share"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `http://localhost:3000/tour/${id}`
+                      );
+                      toast.info("Link Copied to Clipboard");
+                    }}
+                  />
                 </div>
                 <div
                   style={{
@@ -115,7 +130,12 @@ const SingleTour = () => {
                   }}
                   className="shareButton"
                 >
-                  <MDBIcon style={{ marginTop: "15px", marginLeft: "15px"}} fas icon="comment" onClick={() => window.location.href = '#comments'}/>
+                  <MDBIcon
+                    style={{ marginTop: "15px", marginLeft: "15px" }}
+                    fas
+                    icon="comment"
+                    onClick={() => (window.location.href = "#comments")}
+                  />
                 </div>
               </MDBCol>
             </MDBRow>
@@ -166,7 +186,7 @@ const SingleTour = () => {
               {tour.description}
             </MDBCardText> */}
             <MDBCardText className="lead mb-0 text-start">
-            <ReactMarkdown>{tour.description}</ReactMarkdown>
+              <ReactMarkdown>{tour.description}</ReactMarkdown>
             </MDBCardText>
           </MDBCardBody>
         </MDBCard>
@@ -175,8 +195,7 @@ const SingleTour = () => {
           <RelatedTours relatedTours={relatedTours} tourId={id} />
         </MDBCard>
         <DisqusThread id={id} title={tour.title} path={`/tour/${id}`} />
-        <div id="comments">
-        </div>
+        <div id="comments"></div>
       </MDBContainer>
     </>
   );

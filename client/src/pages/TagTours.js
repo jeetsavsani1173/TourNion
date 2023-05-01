@@ -8,26 +8,24 @@ import {
   MDBRow,
   MDBCol,
   MDBIcon,
-  MDBBtn,
   MDBCardGroup,
 } from "mdb-react-ui-kit";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { getToursByTag } from "../redux/features/tourSlice";
 import { excerpt } from "../utility";
-import Button from "react-bootstrap/Button";
 
 const TagTours = () => {
   const { tagTours, loading } = useSelector((state) => ({ ...state.tour }));
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { tag } = useParams();
 
   useEffect(() => {
     if (tag) {
       dispatch(getToursByTag(tag));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tag]);
 
   if (loading) {
@@ -43,13 +41,16 @@ const TagTours = () => {
       }}
     >
       <h3 className="text-center">
-        Tours with tag <MDBIcon fas icon="tags" />: <span
+        Tours with tag <MDBIcon fas icon="tags" />:{" "}
+        <span
           className="badge mt-2 mx-1"
           style={{
             backgroundColor: "#e1ebf7",
             color: "#1a91eb",
           }}
-        >{tag}</span>
+        >
+          {tag}
+        </span>
       </h3>
       <hr style={{ maxWidth: "570px" }} />
       {tagTours &&

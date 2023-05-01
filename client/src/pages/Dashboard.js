@@ -40,6 +40,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (userId) dispatch(getToursByUser(userId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   const excerpt = (str) => {

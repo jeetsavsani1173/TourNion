@@ -28,7 +28,7 @@ const AddEditTour = () => {
   const [tagErrMsg, setTagErrMsg] = useState(null);
   const [fileErrMsg, setFileErrMsg] = useState(null);
   const [image, setImage] = useState(null);
-  const [markdownContent, setMarkdownContent] = useState('');
+  const [markdownContent, setMarkdownContent] = useState("");
 
   const { error, userTours } = useSelector((state) => ({
     ...state.tour,
@@ -56,7 +56,7 @@ const AddEditTour = () => {
   const handleClear = () => {
     setTourData({ title: "", description: "", tags: [] });
     setImage(null);
-    setMarkdownContent('');
+    setMarkdownContent("");
   };
 
   const handleSubmit = (e) => {
@@ -73,15 +73,14 @@ const AddEditTour = () => {
       if (!id) {
         // it is render for add tour page
         dispatch(createTour({ updatedTourData, navigator, toast }));
-        // dispatch(getTours());
-        handleClear();
-        navigate("/");
+        // handleClear();
+        // navigate("/");
       } else {
         // it is render for edit tour page
         dispatch(updateTour({ id, updatedTourData, navigate, toast }));
-        navigate("/");
+        // navigate("/");
       }
-      // navigate("/");
+      handleClear();
     }
   };
 
@@ -96,14 +95,14 @@ const AddEditTour = () => {
     reader.onloadend = () => {
       setTourData({ ...tourData, imageFile: reader.result });
       setImage(reader.result);
-      console.log(reader.result);
+      // console.log(reader.result);
     };
   };
 
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setTourData({ ...tourData, [name]: value });
-    if (name === 'description') {
+    if (name === "description") {
       setMarkdownContent(value);
     }
   };
@@ -123,7 +122,6 @@ const AddEditTour = () => {
   const handleGoBack = () => {
     navigate("/dashboard");
   };
-
 
   return (
     <div
@@ -161,7 +159,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
-              // validation="Please provide your email."
+                // validation="Please provide your email."
               />
             </MDBValidationItem>
             <MDBValidationItem
@@ -179,13 +177,13 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 rows={6}
-              // validation="Please provide your email."
+                // validation="Please provide your email."
               />
-              {markdownContent &&
+              {markdownContent && (
                 <div className="col-12 text-start border border-primary mt-3 px-2 py-1">
                   <ReactMarkdown>{markdownContent}</ReactMarkdown>
                 </div>
-              }
+              )}
             </MDBValidationItem>
             <div className="col-md-12">
               <ChipInput
