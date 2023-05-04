@@ -126,7 +126,7 @@ const Header = () => {
                 <MDBNavbarItem>
                   <MDBNavbarLink href={`/user/${user.result._id}`}>
                     <p className="header-text"><img
-                      src="https://cdn-icons-png.flaticon.com/256/64/64572.png"
+                      src={`https://avatars.dicebear.com/api/gridy/${user?.result?.name}.svg`}
                       width="25"
                       height="25"
                       alt="avatar"

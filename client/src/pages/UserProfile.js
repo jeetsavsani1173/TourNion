@@ -75,7 +75,7 @@ const UserProfile = () => {
                             <div class="card">
                                 <div class="rounded-top text-white d-flex flex-row" style={{ background: 'linear-gradient(0deg, rgba(251,251,251,1) 0%, rgba(240,230,234,1) 100%)', height: '200px' }}>
                                     <div class="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
-                                        <img src="https://cdn-icons-png.flaticon.com/256/64/64572.png"
+                                        <img src={`https://avatars.dicebear.com/api/gridy/${user?.result?.name}.svg`}
                                             alt="Generic placeholder" class="img-fluid img-thumbnail mt-4 mb-2"
                                             style={{ width: '150px', zIndex: '1' }} />
                                         {userId === id &&
