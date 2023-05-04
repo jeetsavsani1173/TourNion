@@ -141,7 +141,7 @@ const SingleTour = () => {
             </MDBRow>
 
             <span>
-              <p className="text-start tourName">Created By: {tour.name}</p>
+              <p className="text-start tourName">Created By: <Link to={`#userid`}>{tour.name}</Link></p>
             </span>
             <div style={{ float: "left" }}>
               {/* <span className="text-start" > */}

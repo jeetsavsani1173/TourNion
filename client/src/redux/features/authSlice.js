@@ -44,6 +44,20 @@ export const googleSignIn = createAsyncThunk(
   }
 );
 
+export const updateUserDetails = createAsyncThunk(
+  "auth/updateUserDetails",
+  async ({id,formValue,navigate,toast},{rejectWithValue}) => {
+    try {
+      const response = await api.updateUserDetails(id,formValue);
+      toast.success("Details Updated Successfully");
+      navigate(`/user/${id}`);
+      return response.data;
+    }catch(err){
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -94,6 +108,18 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     [googleSignIn.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [updateUserDetails.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [updateUserDetails.fulfilled]: (state, action) => {
+      state.loading = false;
+      localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
+      state.user = action.payload;
+    },
+    [updateUserDetails.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./pages/NotFound";
 import TagTours from "./pages/TagTours";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/user/:id" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

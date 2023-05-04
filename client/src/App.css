@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -55,10 +56,11 @@
 }
 
 .tourHover:hover {
-  box-shadow: 0 5px 35px 0px rgba(0,0,0,.1);
+  box-shadow: 0 5px 35px 0px rgba(0, 0, 0, .1);
 }
 
-.tourHover:hover::before, .tourHover:hover::after {
+.tourHover:hover::before,
+.tourHover:hover::after {
   display: block;
   content: '';
   position: absolute;
@@ -80,37 +82,45 @@
     top: -5px;
     left: 0;
   }
+
   12% {
     top: -2px;
     left: 2px;
   }
+
   25% {
     top: 0;
-    left: 5px;    
+    left: 5px;
   }
+
   37% {
     top: 2px;
     left: 2px;
   }
+
   50% {
     top: 5px;
-    left: 0;    
+    left: 0;
   }
+
   62% {
     top: 2px;
     left: -2px;
   }
+
   75% {
     top: 0;
     left: -5px;
   }
+
   87% {
     top: -2px;
     left: -2px;
   }
+
   100% {
     top: -5px;
-    left: 0;    
+    left: 0;
   }
 }
 
@@ -119,36 +129,66 @@
     top: -5px;
     right: 0;
   }
+
   12% {
     top: -2px;
     right: 2px;
   }
+
   25% {
     top: 0;
-    right: 5px;    
+    right: 5px;
   }
+
   37% {
     top: 2px;
     right: 2px;
   }
+
   50% {
     top: 5px;
-    right: 0;    
+    right: 0;
   }
+
   62% {
     top: 2px;
     right: -2px;
   }
+
   75% {
     top: 0;
     right: -5px;
   }
+
   87% {
     top: -2px;
     right: -2px;
   }
+
   100% {
     top: -5px;
-    right: 0;    
+    right: 0;
   }
+}
+
+.user-profile-img-stl-rotate img {
+  transition: 1s ease;
+}
+
+.user-profile-img-stl-rotate img:hover {
+  -webkit-transform: rotateZ(-10deg);
+  -ms-transform: rotateZ(-10deg);
+  transform: rotateZ(-10deg);
+  transition: 1s ease;
+}
+
+.user-profile-img-stl-grow img {
+  transition: 1s ease;
+}
+
+.user-profile-img-stl-grow img:hover {
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(2.0);
+  transition: 1s ease;
 }
