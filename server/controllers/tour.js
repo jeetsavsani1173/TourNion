@@ -176,3 +176,29 @@ export const likeTour = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+// export const addReview = async (req,res) => {
+//   const {id} = req.params;
+//   const {description, parent, user} = req.body;
+//   try {
+//     // if (!req.userId) {
+//     //   return res.json({ message: "User is not authenticated" });
+//     // }
+
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       return res.status(404).json({ message: "Tour doesn't exist." });
+//     }
+
+//     const tour = await TourModel.findById(id);
+
+//     tour.reviews.push({description, parent, user});
+//     // console.log("TOUR : ", tour);
+//     const updatedTour = await TourModel.findByIdAndUpdate(id, tour, {
+//       new: true,
+//     });
+
+//     res.status(201).json({ message: 'Review added successfully', updatedTour });
+//   }catch(error){
+//     res.status(404).json({ message: error.message });
+//   }
+// }
