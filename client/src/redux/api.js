@@ -21,6 +21,7 @@ API.interceptors.request.use((req) => {
 export const signIn = (formData) => API.post("/users/signin", formData);
 export const signUp = (formData) => API.post("/users/signup", formData);
 export const googleSignIn = (result) => API.post("/users/googleSignIn", result);
+export const updateUserDetails = (id, updatedUserDetails) => API.patch(`/users/${id}`, updatedUserDetails);
 
 // tour api calls.
 export const createTour = (tourData) => API.post("/tour", tourData);

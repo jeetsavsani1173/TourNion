@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setLogout } from "../redux/features/authSlice";
 import Button from "react-bootstrap/Button";
 import { searchTours } from "../redux/features/tourSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import decode from "jwt-decode";
 
 const Header = () => {
@@ -103,7 +103,7 @@ const Header = () => {
           <MDBNavbarNav right fullWidth={false} className="mb-2 mb-lg-0">
             {user?.result?._id && (
               <h5 style={{ marginRight: "30px", marginTop: "28px" }}>
-                Logged in as: {user?.result?.name}
+                Logged in as: <Link to={`/user/${user.result._id}`}>{user?.result?.name}</Link>
               </h5>
             )}
             <MDBNavbarItem>
@@ -121,6 +121,17 @@ const Header = () => {
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/dashboard">
                     <p className="header-text">Dashboard</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href={`/user/${user.result._id}`}>
+                    <p className="header-text"><img
+                      src={`https://avatars.dicebear.com/api/gridy/${user?.result?.name}.svg`}
+                      width="25"
+                      height="25"
+                      alt="avatar"
+                      class="rounded-circle"
+                    /></p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               </>

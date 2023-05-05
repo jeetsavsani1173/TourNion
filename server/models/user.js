@@ -11,6 +11,11 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  about: {
+    type: String,
+    required: false,
+    default: '#### I love Traveling!!'
+  },
   password: {
     type: String,
     required: false,

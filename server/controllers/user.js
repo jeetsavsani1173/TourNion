@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import UserModal from "../models/user.js";
+import mongoose from "mongoose";
 
 import sendMail from "../config/mail.js";
 
@@ -58,14 +59,15 @@ export const googleSignIn = async (req, res) => {
   try {
     const oldUser = await UserModal.findOne({ email });
     if (oldUser) {
-      const result = { _id: oldUser._id.toString(), email, name };
+      const result = { _id: oldUser._id.toString(), email, name, 'about':oldUser.about };
       const token = await oldUser.generateJWTToken();
       return res.status(200).json({ result, token });
     }
-
+    
     const result = await UserModal.create({
       email,
       name,
+      'about':'#### I Love Traveling!!',
       googleId,
     });
     sendMail(email);
@@ -78,3 +80,27 @@ export const googleSignIn = async (req, res) => {
       .json({ message: `Something Went Wrong !! -> error message : ${err}` });
   }
 };
+
+export const updateUserDetails = async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, about } = req.body;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: "User doesn't exist." });
+    }
+
+    const oldUser = await UserModal.findById(id);
+    if (!oldUser) {
+      return res.status(404).json({ message: "User doesn't exist." });
+    }
+
+    oldUser.name = `${firstName} ${lastName}`;
+    oldUser.about = about;
+    await UserModal.findByIdAndUpdate(id, oldUser, { new: true });
+    const token = req.headers.authorization.split(" ")[1];
+    res.status(200).json({ result: oldUser, token });
+  } catch (error) {
+    res.status(404).json({ message: error.message, 'Error' : 'texting' });
+  }
+}

@@ -7,13 +7,13 @@ export const createTour = createAsyncThunk(
     try {
       await api.createTour(updatedTourData);
       toast.success("Tour Added Successfully");
-      // // navigate("/");
+      navigate("/");
       // window.location.href = '/';
-      // return response.data;
+      return updatedTourData;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
-    return (window.location.href = "/");
+    // return (window.location.href = "/");
   }
 );
 
