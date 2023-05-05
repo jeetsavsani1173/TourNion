@@ -73,14 +73,14 @@ const AddEditTour = () => {
       if (!id) {
         // it is render for add tour page
         dispatch(createTour({ updatedTourData, navigator, toast }));
-        // handleClear();
-        // navigate("/");
+        handleClear();
+        navigate("/");
       } else {
         // it is render for edit tour page
         dispatch(updateTour({ id, updatedTourData, navigate, toast }));
-        // navigate("/");
+        navigate("/");
       }
-      handleClear();
+      // handleClear();
     }
   };
 
