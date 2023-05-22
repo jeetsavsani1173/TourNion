@@ -25,7 +25,9 @@ export const signin = async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ message: `Something Went Wrong !! -> error message : ${err}` });
+      .json({
+        message: `Something Went Wrong in SignIn page!! -> error message : ${err}`,
+      });
   }
 };
 
@@ -48,9 +50,9 @@ export const signup = async (req, res) => {
     sendMail(email);
     res.status(201).json({ result, token });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: `Something Went Wrong !! -> error message : ${err}` });
+    res.status(500).json({
+      message: `Something Went Wrong At SignUp page !! -> error message : ${err}`,
+    });
   }
 };
 
@@ -59,15 +61,20 @@ export const googleSignIn = async (req, res) => {
   try {
     const oldUser = await UserModal.findOne({ email });
     if (oldUser) {
-      const result = { _id: oldUser._id.toString(), email, name, 'about':oldUser.about };
+      const result = {
+        _id: oldUser._id.toString(),
+        email,
+        name,
+        about: oldUser.about,
+      };
       const token = await oldUser.generateJWTToken();
       return res.status(200).json({ result, token });
     }
-    
+
     const result = await UserModal.create({
       email,
       name,
-      'about':'#### I Love Traveling!!',
+      about: "#### I Love Traveling!!",
       googleId,
     });
     sendMail(email);
@@ -101,6 +108,6 @@ export const updateUserDetails = async (req, res) => {
     const token = req.headers.authorization.split(" ")[1];
     res.status(200).json({ result: oldUser, token });
   } catch (error) {
-    res.status(404).json({ message: error.message, 'Error' : 'texting' });
+    res.status(404).json({ message: error.message, Error: "texting" });
   }
-}
+};

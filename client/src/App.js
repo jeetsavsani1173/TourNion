@@ -61,7 +61,14 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/user/:id" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
+          <Route
+            path="/user/:id"
+            element={
+              <PrivateRoute>
+                <UserProfile />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

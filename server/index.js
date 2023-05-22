@@ -16,9 +16,12 @@ const log = console.log;
 const app = express();
 
 // middleware
+// for logging https request to the backend console...
 app.use(morgan("dev"));
+// for getting server responce into the json we have to parsed.. ---> The express.json() function is a built-in middleware function in Express. It parses incoming requests with JSON payloads and is based on body-parser
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
+// In an Express application, app.use(cors()) is used to enable Cross-Origin Resource Sharing (CORS) for the application. CORS is a mechanism that allows web browsers to make cross-origin requests securely.
 app.use(cors());
 
 // loading env variables
