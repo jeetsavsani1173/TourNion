@@ -143,7 +143,6 @@ export const getRelatedTours = async (req, res) => {
     tours.sort(
       (a, b) => parseFloat(b.likes.length) - parseFloat(a.likes.length)
     );
-    console.log(tours);
     res.json(tours);
   } catch (err) {
     res.status(404).json({ message: "Something went wrong." });
