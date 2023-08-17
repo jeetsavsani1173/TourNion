@@ -13,10 +13,10 @@ const routeCache = (duration) => (req, res, next) => {
   const cachedResponse = cache.get(key);
   // if it exist , send cache results
   if (cachedResponse) {
-    console.log(`Cached hit for ${key}`);
+    // console.log(`Cached hit for ${key}`);
     res.send(cachedResponse);
   } else {
-    console.log(`Cache Miss for ${key}`);
+    // console.log(`Cache Miss for ${key}`);
     res.originalSend = res.send;
     res.send = (body) => {
       res.originalSend(body);

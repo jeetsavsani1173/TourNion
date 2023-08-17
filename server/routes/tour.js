@@ -17,10 +17,10 @@ import {
 } from "../controllers/tour.js";
 
 router.post("/", auth, createTour);
-router.get("/", cache(60), getTours);
-router.get("/search", getToursBySearch);
+router.get("/", cache(30), getTours);
+router.get("/search", cache(60), getToursBySearch);
 router.post("/relatedTours", getRelatedTours);
-router.get("/tag/:tag", getToursByTags);
+router.get("/tag/:tag", cache(60), getToursByTags);
 router.get("/userTours/:id", auth, getToursByUser);
 router.patch("/like/:id", auth, likeTour);
 router.patch("/:id", auth, updateTour);
